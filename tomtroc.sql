@@ -8,6 +8,7 @@ USE tomtroc;
 -- On supprime les tables si elles existent déjà
 DROP TABLE IF EXISTS livre;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS commentaire;
 
 -- ===========================================
 -- TABLE : user
@@ -33,6 +34,27 @@ CREATE TABLE livre (
   user_id INT UNSIGNED NOT NULL,
   CONSTRAINT fk_livre_user
     FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+  -- ===========================================
+-- TABLE : commentaire
+-- ===========================================
+CREATE TABLE commentaire (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  contenu TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  user_id INT UNSIGNED NOT NULL,
+  livre_id INT UNSIGNED DEFAULT NULL,
+  CONSTRAINT fk_commentaire_user
+    FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT fk_commentaire_livre
+    FOREIGN KEY (livre_id) REFERENCES livre(id)
     ON DELETE CASCADE
     ON UPDATE CASCADE
 ) ENGINE=InnoDB
@@ -77,3 +99,24 @@ INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
 
 ('Le Hobbit', 'J.R.R. Tolkien', '/img/hobbit.jpg',
  'L\'aventure de Bilbo avant Le Seigneur des Anneaux.', 1, @alex_id);
+
+ -- ===========================================
+-- COMMENTAIRES ENTRE CHRIS ET ALEX
+-- ===========================================
+
+-- Chris pose une question sur "Dune"
+INSERT INTO commentaire (contenu, user_id, livre_id)
+VALUES ('Salut Alex, tu as déjà lu Dune ? Tu en as pensé quoi ?', @chris_id, 3);
+
+-- Alex répond
+INSERT INTO commentaire (contenu, user_id, livre_id)
+VALUES ('Oui ! C’est un roman incroyable, super riche. Tu veux le lire ?', @alex_id, 3);
+
+-- Chris répond encore
+INSERT INTO commentaire (contenu, user_id, livre_id)
+VALUES ('Grave ! Je suis super motivé. Il est toujours dispo à l''échange ?', @chris_id, 3);
+
+-- Alex confirme
+INSERT INTO commentaire (contenu, user_id, livre_id)
+VALUES ('Ouais il est dispo ! Si tu veux je peux te le passer cette semaine.', @alex_id, 3);
+
