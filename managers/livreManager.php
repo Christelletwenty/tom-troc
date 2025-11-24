@@ -28,7 +28,7 @@ class LivreManager {
         $findAllBooksRequest = 'SELECT * FROM livre';
 
         $findAllBooksStmt = $this->db->prepare($findAllBooksRequest);
-        $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livres');
+        $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
         $findAllBooksStmt->execute();
 
         return $findAllBooksStmt->fetchAll();
