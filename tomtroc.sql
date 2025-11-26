@@ -6,9 +6,9 @@ CREATE DATABASE IF NOT EXISTS tomtroc
 USE tomtroc;
 
 -- On supprime les tables si elles existent déjà
+DROP TABLE IF EXISTS commentaire;
 DROP TABLE IF EXISTS livre;
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS commentaire;
 
 -- ===========================================
 -- TABLE : user
@@ -16,7 +16,9 @@ DROP TABLE IF EXISTS commentaire;
 CREATE TABLE user (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
@@ -40,7 +42,7 @@ CREATE TABLE livre (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
-  -- ===========================================
+-- ===========================================
 -- TABLE : commentaire
 -- ===========================================
 CREATE TABLE commentaire (
@@ -66,14 +68,14 @@ CREATE TABLE commentaire (
 -- ===========================================
 
 -- Utilisateur Chris
-INSERT INTO user (username, password) VALUES
-('chris', 'chris');
+INSERT INTO user (username, email, password, created_at) VALUES
+('chris', 'chris@example.com', 'chris', '2023-04-12 10:15:00');
 
 SET @chris_id = LAST_INSERT_ID();
 
 -- Utilisateur Alex
-INSERT INTO user (username, password) VALUES
-('alex', 'alex');
+INSERT INTO user (username, email, password, created_at) VALUES
+('alex', 'alex@example.com', 'alex', '2023-06-03 18:40:00');
 
 SET @alex_id = LAST_INSERT_ID();
 
@@ -100,23 +102,17 @@ INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
 ('Le Hobbit', 'J.R.R. Tolkien', '/img/hobbit.jpg',
  'L\'aventure de Bilbo avant Le Seigneur des Anneaux.', 1, @alex_id);
 
- -- ===========================================
+-- ===========================================
 -- COMMENTAIRES ENTRE CHRIS ET ALEX
 -- ===========================================
-
--- Chris pose une question sur "Dune"
 INSERT INTO commentaire (contenu, user_id, livre_id)
 VALUES ('Salut Alex, tu as déjà lu Dune ? Tu en as pensé quoi ?', @chris_id, 3);
 
--- Alex répond
 INSERT INTO commentaire (contenu, user_id, livre_id)
 VALUES ('Oui ! C’est un roman incroyable, super riche. Tu veux le lire ?', @alex_id, 3);
 
--- Chris répond encore
 INSERT INTO commentaire (contenu, user_id, livre_id)
 VALUES ('Grave ! Je suis super motivé. Il est toujours dispo à l''échange ?', @chris_id, 3);
 
--- Alex confirme
 INSERT INTO commentaire (contenu, user_id, livre_id)
 VALUES ('Ouais il est dispo ! Si tu veux je peux te le passer cette semaine.', @alex_id, 3);
-

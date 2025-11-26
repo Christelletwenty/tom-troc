@@ -7,18 +7,18 @@ class UserManager {
         $this->db = $db;
     }
 
-    //Récupération du user par username pour le login
-    public function getUserByUsername(string $username) {
-        $getUsernameRequest = 'SELECT * FROM user WHERE username = :username';
+    //Récupération du user par email pour le login
+    public function getUserByUsername(string $email) {
+        $getEmailRequest = 'SELECT * FROM user WHERE email = :email';
 
-        $getUsernameStmt = $this->db->prepare($getUsernameRequest);
-        $getUsernameStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-        $getUsernameStmt->execute ([
+        $getEmailStmt = $this->db->prepare($getEmailRequest);
+        $getEmailStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $getEmailStmt->execute ([
             //strtolower me retourne une nouvelle variable mais en minuscule
-            'username' => strtolower($username)
+            'email' => strtolower($email)
         ]);
 
-        return $getUsernameStmt->fetch();
+        return $getEmailStmt->fetch();
     }
 
     //Récupération des users par id
@@ -50,7 +50,7 @@ class UserManager {
     //Création d'un user
     public function createUser(User $user) {
 
-        $createUserRequest = 'INSERT INTO user (username, password) VALUES (:username, :password)';
+        $createUserRequest = 'INSERT INTO user (username, email, password) VALUES (:username, :email, :password)';
 
         $createuserStmt = $this->db->prepare($createUserRequest);
         $createuserStmt->execute ([
@@ -61,7 +61,7 @@ class UserManager {
     }
 
     //Update d'un profoil user
-    public function UpdateUser(User $user) {
+    public function updateUser(User $user) {
 
         $updateUserRequest = 'UPDATE user SET username = :username, password = :password WHERE id = :id';
 

@@ -51,7 +51,7 @@ class LivreManager {
     }
 
 
-    //Supprimer un livre : passer le currentUserId en paramètre (souvent venant de $_SESSION['user_id']).
+    //Supprimer un livre : passer le currentUserId en paramètre (venant de $_SESSION['user_id']).
     public function deleteBook(int $id) {
 
         $deleteBookRequest = 'DELETE FROM livre WHERE id = :id AND user_id = :user_id';
@@ -64,7 +64,7 @@ class LivreManager {
     }
 
     //Mettre à jour un livre
-    public function UpdateBook(Livre $livre) {
+    public function updateBook(Livre $livre) {
 
         $updateBookRequest = 'UPDATE livre SET titre = :titre, auteur = :auteur, image = :image, description = :description, dispo = :dispo WHERE id = :id AND user_id = :user_id';
 

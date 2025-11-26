@@ -5,9 +5,15 @@ require_once '../managers/userManager.php';
 
 $userManager = new UserManager($db);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId'])) {
+    http_response_code(401);
+    echo json_encode(['erreur' => 'Utilisateur non authentifié']);
+    return;
+} 
 //Création d'un user
-if(isset($_POST['username']) && isset($_POST['password'])) {
+if(isset($_POST['username']) &&  isset($_POST['email']) && isset($_POST['password'])) {
     $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
     //Vérification si le username écrit existe déjà ?
@@ -20,11 +26,24 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
     } else {
         $user = new User();
         $user->setUsername($username);
+        $user->setEmail($email);
         $user-setPassword($password);
+
         $userManager->createUser($user);
         echo json_encode(['succès' => 'Utilisateur crée avec succès']);
         return;
     }
+    //Update d'un user existant
+} else if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+    $user_id = $_SESSION['currentUserId'];
+
+    $currentUserId = $_SESSION['currentUserId'];
+
+    $user->setUsername($username);
+
+    $userManager->updateUser($user);
+    echo json_encode(['succès' => 'Profil mis à jour']);
     //On va chercher le user par son id
 } else if(isset($_GET['id'])) {
     $user = $userManager->getUserById($_GET['id']);

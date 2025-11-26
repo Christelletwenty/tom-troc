@@ -4,7 +4,9 @@
 
         private $id;
         private $username;
+        private $email;
         private $password;
+
 
         public function getId() {
             return $this->id;
@@ -20,6 +22,14 @@
 
         public function setUsername($username) {
             return $this->username;
+        }
+
+        public function getEmail() {
+            return $this->email;
+        }
+
+        public function setEmail($email) {
+            return $this->email;
         }
 
         public function getPassword() {
