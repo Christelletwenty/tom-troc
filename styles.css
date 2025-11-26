@@ -5,6 +5,8 @@
   --text: rgb(41, 41, 41);
 }
 
+/** GLOBAL SECTION STYLE **/
+
 html,
 body {
   margin: 0;
@@ -25,10 +27,11 @@ button {
   color: #fff;
   border: 1px solid var(--primary);
   border-radius: 12px;
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
 }
 
-button.variant {
+button.variant,
+button:hover {
   background-color: var(--neutral);
   color: var(--primary);
   border: 1px solid var(--primary);
@@ -84,9 +87,77 @@ main {
   overflow: auto;
 }
 
+/** BOOK SECTION STYLE **/
+
 li.book:first-child {
   display: none;
 }
+
+/** LOGIN SECTION STYLE **/
+
+.connexion {
+  display: flex;
+  height: 100%;
+  background-color: #faf9f7;
+}
+
+.form-connexion {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.connec {
+  font-size: 36px;
+  margin-bottom: 50px;
+}
+
+.connexion label {
+  margin-bottom: 10px;
+}
+
+.connexion input[type="email"],
+.connexion input[type="password"] {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e6e6e6;
+  background-color: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+.register {
+  font-size: 14px;
+  margin-top: 30px;
+}
+
+.connexion form {
+  display: flex;
+  box-sizing: border-box;
+  height: fit-content;
+  align-items: stretch;
+  overflow: hidden;
+  min-width: 300px;
+  flex-direction: column;
+}
+
+.mask-group {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask-group {
+  background-image: url("assets/mask_group.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/** FOOTER SECTION STYLE **/
 
 footer {
   width: 100%;
