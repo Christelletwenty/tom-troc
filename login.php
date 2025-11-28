@@ -4,8 +4,6 @@
 
 <?php include './templates/header.php'; ?>
 
-<!DOCTYPE html>
-<html lang="en">
     <div class="connexion">
         <div class="form-connexion">
         <form>

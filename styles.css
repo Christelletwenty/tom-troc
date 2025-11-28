@@ -6,6 +6,10 @@
   --text: rgb(41, 41, 41);
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /** GLOBAL SECTION STYLE **/
 
 html,
@@ -172,6 +176,31 @@ li.book:first-child {
   color: #a6a4a4;
 }
 
+/** BOOK DETAIL SECTION STYLE **/
+
+.book-detail {
+  display: flex;
+  height: 100%;
+  background-color: var(--background);
+}
+
+.book-img {
+  display: flex;
+  flex: 0 0 50%;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.book-info {
+  display: flex;
+  flex: 0 0 50%;
+  flex-direction: column;
+  padding: 3rem 2rem;
+}
+
 /** LOGIN SECTION STYLE **/
 
 .connexion {
@@ -205,17 +234,6 @@ input {
   font-size: 15px;
   outline: none;
 }
-
-/* .connexion input[type="email"],
-.connexion input[type="username"],
-.connexion input[type="password"] {
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #e6e6e6;
-  background-color: #ffffff;
-  font-size: 15px;
-  outline: none;
-} */
 
 .register {
   font-size: 14px;

@@ -22,11 +22,40 @@ class LivreManager {
 
     }
 
+    //Récupérer des livres par userId
+    public function getBookById(int $id) {
+
+        $getBooksRequest = 'SELECT * FROM livre WHERE id = :id';
+
+        $getBooksStmt = $this->db->prepare($getBooksRequest);
+        $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
+        $getBooksStmt->execute( [
+            'id' => $id
+        ] );
+
+        return $getBooksStmt->fetch();
+
+    }
+
 
     //Récupérer tous les livres
+    // Récupérer tous les livres
     public function findAllBooks() {
 
-        $findAllBooksRequest = 'SELECT *, u.username as user_name FROM livre l JOIN user u ON l.user_id = u.id WHERE l.dispo = 1';
+        $findAllBooksRequest = '
+            SELECT
+                l.id        AS id,
+                l.titre     AS titre,
+                l.auteur    AS auteur,
+                l.image     AS image,
+                l.description AS description,
+                l.dispo     AS dispo,
+                l.user_id   AS user_id,
+                u.username  AS user_name
+            FROM livre l
+            JOIN user u ON l.user_id = u.id
+            WHERE l.dispo = 1
+        ';
 
         $findAllBooksStmt = $this->db->prepare($findAllBooksRequest);
         $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
@@ -34,6 +63,7 @@ class LivreManager {
 
         return $findAllBooksStmt->fetchAll();
     }
+
 
     //Créer un livre : passer le currentUserId en paramètre (souvent venant de $_SESSION['user_id']).
     public function createBook(Livre $livre) {
