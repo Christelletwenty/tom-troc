@@ -13,7 +13,7 @@
         }
 
         public function setId($id) {
-            return $this->id;
+            return $this->id = $id;
         }
 
         public function getUsername() {
@@ -21,7 +21,7 @@
         }
 
         public function setUsername($username) {
-            return $this->username;
+            return $this->username = $username;
         }
 
         public function getEmail() {
@@ -29,7 +29,7 @@
         }
 
         public function setEmail($email) {
-            return $this->email;
+            return $this->email = $email;
         }
 
         public function getPassword() {
@@ -37,7 +37,7 @@
         }
 
         public function setPassword($password) {
-            return $this->password;
+            return $this->password = $password;
         }
 
         //Création d'un tableau associatif pour la conversion en JSON

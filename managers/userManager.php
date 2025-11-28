@@ -55,6 +55,7 @@ class UserManager {
         $createuserStmt = $this->db->prepare($createUserRequest);
         $createuserStmt->execute ([
             'username' => strtolower($user->getUsername()),
+            'email' => $user->getEmail(),
             //On encrypte le PWD avant de le stocker
             'password' => password_hash($user->getPassword(), PASSWORD_DEFAULT)
         ]);

@@ -26,7 +26,7 @@ if(isset($_POST['email']) && isset($_POST['password'])) {
     //Si les champs username et password ne sont pas fournis
 } else {
     http_response_code(400);
-    echo json_encode(['error' => 'Identifiants et mot de passe requis']);
+    echo json_encode(['error' => 'Identifiants et mot de passe requis' . json_encode($_POST)]);
     return;
 }
 

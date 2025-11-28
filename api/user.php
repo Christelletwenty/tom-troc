@@ -1,15 +1,11 @@
 <?php 
+session_start();
 
 require_once '../config/database.php';
 require_once '../managers/userManager.php';
 
 $userManager = new UserManager($db);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId'])) {
-    http_response_code(401);
-    echo json_encode(['erreur' => 'Utilisateur non authentifié']);
-    return;
-} 
 //Création d'un user
 if(isset($_POST['username']) &&  isset($_POST['email']) && isset($_POST['password'])) {
     $username = $_POST['username'];
@@ -27,7 +23,7 @@ if(isset($_POST['username']) &&  isset($_POST['email']) && isset($_POST['passwor
         $user = new User();
         $user->setUsername($username);
         $user->setEmail($email);
-        $user-setPassword($password);
+        $user->setPassword($password);
 
         $userManager->createUser($user);
         echo json_encode(['succès' => 'Utilisateur crée avec succès']);
@@ -35,6 +31,14 @@ if(isset($_POST['username']) &&  isset($_POST['email']) && isset($_POST['passwor
     }
     //Update d'un user existant
 } else if (isset($_POST['username'])) {
+
+    // vérification authentification
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId'])) {
+        http_response_code(401);
+        echo json_encode(['erreur' => 'Utilisateur non authentifié']);
+        return;
+    }
+
     $username = $_POST['username'];
     $user_id = $_SESSION['currentUserId'];
 

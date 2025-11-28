@@ -13,7 +13,7 @@
         }
 
         public function setId($id) {
-            return $this->id;
+            return $this->id = $id;
         }
 
         public function getContenu() {
@@ -21,7 +21,7 @@
         }
 
         public function setContenu($contenu) {
-            return $this->contenu;
+            return $this->contenu = $contenu;
         }
 
         public function getCreatedAt() {
@@ -29,7 +29,7 @@
         }
 
         public function setCreatedAt($created_at) {
-            return $this->created_at;
+            return $this->created_at = $created_at;
         }
 
         public function getUserId() {
@@ -37,7 +37,7 @@
         }
 
         public function setUserId($user_id) {
-            return $this->user_id;
+            return $this->user_id = $user_id;
         }
 
         public function getLivreId() {
@@ -45,7 +45,7 @@
         }
 
         public function setLivreId($livre_id) {
-            return $this->livre_id;
+            return $this->livre_id = $livre_id;
         }
 
         //Création d'un tableau associatif pour la conversion en JSON

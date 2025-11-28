@@ -15,7 +15,7 @@
         } 
 
         public function setId($id) {
-            return $this->id;
+            return $this->id = $id;
         }
 
         public function getTitre() {
@@ -23,7 +23,7 @@
         }
 
         public function setTitre($titre) {
-            return $this->titre;
+            return $this->titre = $titre;
         }
 
         public function getAuteur() {
@@ -31,7 +31,7 @@
         }
 
         public function setAuteur($auteur) {
-            return $this->auteur;
+            return $this->auteur = $auteur;
         }
 
         public function getImage() {
@@ -39,7 +39,7 @@
         }
 
         public function setImage($image) {
-            return $this->image;
+            return $this->image = $image;
         }
 
         public function getDescription() {
@@ -47,7 +47,7 @@
         }
 
         public function setDescription($description) {
-            return $this->description;
+            return $this->description = $description;
         }
 
         public function getDispo() {
@@ -55,7 +55,7 @@
         }
 
         public function setDispo($dispo) {
-            return $this->dispo;
+            return $this->dispo = $dispo;
         }
 
         public function getUserIid() {
@@ -63,7 +63,7 @@
         } 
 
         public function setUserId($user_id) {
-            return $this->user_id;
+            return $this->user_id = $user_id;
         }
 
         //Création d'un tableau associatif pour la conversion en JSON
