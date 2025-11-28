@@ -74,6 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $books = $booksManager->getBooksByUserId($_GET['user_id']);
     echo json_encode($books);
     return;
+    //Récupération de tous les livres par username
+
+} else if (isset($_GET['id'])) {
+    $books = $booksManager->getgetBooksByUsername();
+    echo json_encode($books);
+    return;
     //Récupération de tous les livres
 } else {
     $books = $booksManager->findAllBooks();

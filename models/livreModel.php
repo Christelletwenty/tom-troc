@@ -9,6 +9,7 @@
         private $description;
         private $dispo;
         private $user_id;
+        private $user_name;
 
         public function getId() {
             return $this->id;
@@ -58,12 +59,20 @@
             return $this->dispo = $dispo;
         }
 
-        public function getUserIid() {
+        public function getUserId() {
             return $this->user_id;
         } 
 
         public function setUserId($user_id) {
             return $this->user_id = $user_id;
+        }
+
+        public function getUserName() {
+            return $this->user_name;
+        } 
+
+        public function setUser($userName) {
+            return $this->user_name = $userName;
         }
 
         //Création d'un tableau associatif pour la conversion en JSON
@@ -76,7 +85,8 @@
                 'image' => $this->image,
                 'description' => $this->description,
                 'dispo' => $this->dispo,
-                'user_id' => $this->user_id
+                'user_id' => $this->user_id,
+                'user_name' => $this->user_name
             ];
         }
     }

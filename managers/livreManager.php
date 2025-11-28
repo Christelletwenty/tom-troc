@@ -22,10 +22,11 @@ class LivreManager {
 
     }
 
+
     //Récupérer tous les livres
     public function findAllBooks() {
 
-        $findAllBooksRequest = 'SELECT * FROM livre';
+        $findAllBooksRequest = 'SELECT *, u.username as user_name FROM livre l JOIN user u ON l.user_id = u.id WHERE l.dispo = 1';
 
         $findAllBooksStmt = $this->db->prepare($findAllBooksRequest);
         $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');

@@ -83,23 +83,23 @@ SET @alex_id = LAST_INSERT_ID();
 -- LIVRES DE CHRIS
 -- ===========================================
 INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
-('Le Petit Prince', 'Antoine de Saint-Exupéry', '/img/petitprince.jpg',
+('Le Petit Prince', 'Antoine de Saint-Exupéry', 'assets/petitprince.jpg',
  'Un classique de la littérature française.', 1, @chris_id),
 
-('1984', 'George Orwell', '/img/1984.jpg',
+('1984', 'George Orwell', 'assets/1984.jpg',
  'Roman dystopique sur une société de surveillance totale.', 0, @chris_id),
 
-('Dune', 'Frank Herbert', '/img/dune.jpg',
+('Dune', 'Frank Herbert', 'assets/dune.jpg',
  'Grande fresque de science-fiction sur la planète Arrakis.', 1, @chris_id);
 
 -- ===========================================
 -- LIVRES D'ALEX
 -- ===========================================
 INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
-('Harry Potter à l\'école des sorciers', 'J.K. Rowling', '/img/hp1.jpg',
+('Harry Potter à l\'école des sorciers', 'J.K. Rowling', 'assets/hp1.jpg',
  'Premier tome de la série Harry Potter.', 1, @alex_id),
 
-('Le Hobbit', 'J.R.R. Tolkien', '/img/hobbit.jpg',
+('Le Hobbit', 'J.R.R. Tolkien', 'assets/hobbit.jpg',
  'L\'aventure de Bilbo avant Le Seigneur des Anneaux.', 1, @alex_id);
 
 -- ===========================================
