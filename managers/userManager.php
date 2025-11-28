@@ -7,15 +7,15 @@ class UserManager {
         $this->db = $db;
     }
 
-    //Récupération du user par email pour le login
-    public function getUserByUsername(string $email) {
-        $getEmailRequest = 'SELECT * FROM user WHERE email = :email';
+    //Récupération du user par username pour le login
+    public function getUserByUsername(string $username) {
+        $getEmailRequest = 'SELECT * FROM user WHERE username = :username';
 
         $getEmailStmt = $this->db->prepare($getEmailRequest);
         $getEmailStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
         $getEmailStmt->execute ([
             //strtolower me retourne une nouvelle variable mais en minuscule
-            'email' => strtolower($email)
+            'username' => strtolower($username)
         ]);
 
         return $getEmailStmt->fetch();

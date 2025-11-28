@@ -47,6 +47,10 @@
                 console.log("Success", data);
                 // Redirection vers la page d'accueil après la création du compte
                 window.location.href = "index.php";
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                document.querySelector('.error').innerText = "Pseudo déjà prit. Veuillez en choisir un autre";
             });
         });
 
