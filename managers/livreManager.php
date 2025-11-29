@@ -25,7 +25,20 @@ class LivreManager {
     //Récupérer des livres par userId
     public function getBookById(int $id) {
 
-        $getBooksRequest = 'SELECT * FROM livre WHERE id = :id';
+        $getBooksRequest = '
+            SELECT
+                l.id        AS id,
+                l.titre     AS titre,
+                l.auteur    AS auteur,
+                l.image     AS image,
+                l.description AS description,
+                l.dispo     AS dispo,
+                l.user_id   AS user_id,
+                u.username  AS user_name
+            FROM livre l
+            JOIN user u ON l.user_id = u.id
+            WHERE l.id = :id
+        ';
 
         $getBooksStmt = $this->db->prepare($getBooksRequest);
         $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
@@ -37,8 +50,6 @@ class LivreManager {
 
     }
 
-
-    //Récupérer tous les livres
     // Récupérer tous les livres
     public function findAllBooks() {
 

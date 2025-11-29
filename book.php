@@ -11,10 +11,11 @@
     <h3 class="titre"></h3>
     <h2 class="auteur"></h2>
     <hr>
-    <h3 class="description">Description</h3>
-    <h3 class="proprio">Propriétaire</h3>
-    <span class="soldby">Vendu par:</span>
-    <span class="register"><a href="message.php">Envoyer un message</a></span>
+    <h3>Description</h3>
+    <p class="description"></p>
+    <h3>Propriétaire</h3>
+    <p class="proprio"></p>
+    <button type="button" id="send-msg">Envoyer un message</button>
   </div>
         
 </section>
@@ -24,8 +25,15 @@
   import { getBookById } from "./services/books.js";
 
   document.addEventListener("DOMContentLoaded", () => {
-    getBookById(new URLSearchParams(window.location.search).get('id')).then((book) => {
+    getBookById(new URLSearchParams(window.location.search).get('id')).then((book) => { console.log(book);
       document.querySelector(".book-img").style.backgroundImage = `url(${book.image})`;
+      document.querySelector(".titre").innerText = book.titre;
+      document.querySelector(".auteur").innerText = "par" + " " + book.auteur;
+      document.querySelector(".description").innerText = book.description;
+      document.querySelector(".proprio").innerText = book.user_name;
+      document.querySelector("#send-msg").addEventListener("click", () => {
+        window.location.href = `message.php?user_id=${book.user_id}`;
+      })
     });
 
   });

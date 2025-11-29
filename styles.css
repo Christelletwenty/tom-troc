@@ -190,7 +190,7 @@ li.book:first-child {
   align-items: center;
   justify-content: center;
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
 }
 
@@ -199,6 +199,67 @@ li.book:first-child {
   flex: 0 0 50%;
   flex-direction: column;
   padding: 3rem 2rem;
+  align-items: center;
+}
+
+.book-info > * {
+  width: clamp(320px, 485px, 100%);
+}
+
+.book-info .titre {
+  margin: 0 0 8px;
+  font-size: 40px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.book-info .auteur {
+  margin: 0 0 28px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.book-info hr {
+  width: 40px;
+  height: 1px;
+  border: none;
+  margin: 0 0 32px;
+}
+
+.book-info h3 {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.book-info .description {
+  margin: 0 0 40px;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.book-info .proprio {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 40px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.book-info .proprio::before {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #d0d0d0;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
 }
 
 /** LOGIN SECTION STYLE **/

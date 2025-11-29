@@ -17,6 +17,7 @@ CREATE TABLE user (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL UNIQUE,
   email VARCHAR(255) NOT NULL UNIQUE,
+  image VARCHAR(255) DEFAULT NULL,
   password VARCHAR(255) NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB
@@ -68,39 +69,69 @@ CREATE TABLE commentaire (
 -- ===========================================
 
 -- Utilisateur Chris
-INSERT INTO user (username, email, password, created_at) VALUES
-('chris', 'chris@example.com', 'chris', '2023-04-12 10:15:00');
+INSERT INTO user (username, email, image, password, created_at) VALUES
+('chris', 'chris@example.com', 'assets/chris.jpg', 'chris', '2023-04-12 10:15:00');
 
 SET @chris_id = LAST_INSERT_ID();
 
 -- Utilisateur Alex
-INSERT INTO user (username, email, password, created_at) VALUES
-('alex', 'alex@example.com', 'alex', '2023-06-03 18:40:00');
+INSERT INTO user (username, email, image, password, created_at) VALUES
+('alex', 'alex@example.com', 'assets/alex.jpg', 'alex', '2023-06-03 18:40:00');
 
 SET @alex_id = LAST_INSERT_ID();
 
 -- ===========================================
--- LIVRES DE CHRIS
+-- LIVRES DE CHRIS (DESCRIPTIONS LONGUES)
 -- ===========================================
 INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
-('Le Petit Prince', 'Antoine de Saint-Exupéry', 'assets/petitprince.jpg',
- 'Un classique de la littérature française.', 1, @chris_id),
+(
+  'Le Petit Prince',
+  'Antoine de Saint-Exupéry',
+  'assets/petitprince.jpg',
+  '“Le Petit Prince” est un livre que j''ai relu plusieurs fois à différents moments de ma vie, et à chaque lecture j''y ai trouvé quelque chose de nouveau. Quand je l''ai découvert plus jeune, je l''ai surtout vécu comme un joli conte poétique. En le relisant adulte, certaines phrases m''ont littéralement arrêté dans ma lecture tant elles résonnaient avec mon quotidien, ma façon de voir les relations et ce que l''on considère comme important. Ce que j''aime particulièrement, c''est la manière dont le livre parle de l''amitié, de la responsabilité et du fait de prendre soin des autres sans jamais être lourd ou moralisateur. C''est une histoire courte, mais elle laisse une impression durable, un peu comme une petite lumière qui continue de briller longtemps après avoir refermé le livre.',
+  1,
+  @chris_id
+),
 
-('1984', 'George Orwell', 'assets/1984.jpg',
- 'Roman dystopique sur une société de surveillance totale.', 0, @chris_id),
+(
+  '1984',
+  'George Orwell',
+  'assets/1984.jpg',
+  '“1984” a été une lecture assez éprouvante, mais dans le bon sens du terme. Dès les premières pages, j''ai ressenti une forme de malaise, cette impression d''être enfermé dans un monde où chaque geste, chaque pensée est surveillé. Le roman m''a fait réfléchir à la place de la liberté individuelle, à la manipulation de l''information et à la façon dont les régimes autoritaires peuvent déformer la réalité. Ce n''est pas un livre que l''on lit pour se détendre, mais plutôt un texte qui bouscule et qui reste en tête longtemps. Après l''avoir terminé, j''ai eu du mal à passer à autre chose : certaines scènes et certaines phrases reviennent encore régulièrement quand j''entends parler de politique, de médias ou de contrôle social. C''est un classique qui mérite clairement sa réputation, même si on ne ressort pas indemne de sa lecture.',
+  0,
+  @chris_id
+),
 
-('Dune', 'Frank Herbert', 'assets/dune.jpg',
- 'Grande fresque de science-fiction sur la planète Arrakis.', 1, @chris_id);
+(
+  'Dune',
+  'Frank Herbert',
+  'assets/dune.jpg',
+  '“Dune” est un véritable voyage, autant par son univers que par la profondeur de ses personnages. Au début, j''ai mis un peu de temps à entrer dans l''histoire, mais une fois plongé dans l''atmosphère d''Arrakis, j''ai eu du mal à lâcher le livre. Ce qui m''a le plus marqué, c''est la richesse du monde : les enjeux politiques, les luttes de pouvoir entre les maisons, la place de l''écologie, la relation au désert et à l''épice… tout est dense mais extrêmement bien construit. J''ai aussi beaucoup aimé suivre l''évolution de Paul et la manière dont il se retrouve pris entre son destin, les attentes des autres et ses propres doutes. C''est un livre qui demande un peu d''attention, mais qui récompense largement le lecteur avec une histoire épique, intelligente et fascinante.',
+  1,
+  @chris_id
+);
 
 -- ===========================================
--- LIVRES D'ALEX
+-- LIVRES D'ALEX (DESCRIPTIONS LONGUES)
 -- ===========================================
 INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
-('Harry Potter à l\'école des sorciers', 'J.K. Rowling', 'assets/hp1.jpg',
- 'Premier tome de la série Harry Potter.', 1, @alex_id),
+(
+  'Harry Potter à l''école des sorciers',
+  'J.K. Rowling',
+  'assets/hp1.jpg',
+  'Ce premier tome de “Harry Potter” est l''un de ceux qui m''ont donné le goût de la lecture quand j''étais plus jeune. Je me souviens encore de la sensation de découvrir Poudlard pour la première fois, d''imaginer les couloirs, les escaliers qui bougent, les salles de cours et les personnages hauts en couleur. C''est un livre que j''associe beaucoup à la notion de confort : à chaque relecture, j''ai l''impression de retrouver un endroit familier où je me sens bien. Au-delà de la magie et de l''aventure, ce que j''apprécie vraiment, c''est la manière dont il parle de l''amitié, du courage et de la différence sans jamais être trop lourd. C''est un roman accessible, idéal pour se replonger dans une ambiance chaleureuse et réconfortante, que l''on soit ado ou adulte.',
+  1,
+  @alex_id
+),
 
-('Le Hobbit', 'J.R.R. Tolkien', 'assets/hobbit.jpg',
- 'L\'aventure de Bilbo avant Le Seigneur des Anneaux.', 1, @alex_id);
+(
+  'Le Hobbit',
+  'J.R.R. Tolkien',
+  'assets/hobbit.jpg',
+  '“Le Hobbit” a pour moi le charme d''un grand conte d''aventure, avec ce côté à la fois léger et épique. J''ai adoré suivre Bilbo, ce personnage qui n''a rien d''un héros au départ et qui se retrouve embarqué bien malgré lui dans une quête qui le dépasse. Ce que le livre m''a apporté, c''est ce sentiment d''évasion totale : on voyage à travers les paysages, on rencontre des créatures étranges, on ressent la peur, l''excitation, l''émerveillement. J''ai aussi beaucoup aimé l''humour discret de Tolkien et la façon dont il joue avec l''idée du confort que l''on quitte pour découvrir quelque chose de plus grand. C''est un roman que je recommande souvent à ceux qui veulent découvrir la fantasy sans se lancer directement dans quelque chose de trop long ou trop complexe.',
+  1,
+  @alex_id
+);
 
 -- ===========================================
 -- COMMENTAIRES ENTRE CHRIS ET ALEX
