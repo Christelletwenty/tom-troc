@@ -81,6 +81,11 @@ header nav ul li {
   align-items: center;
 }
 
+header nav ul li#login-button,
+header nav ul li#logout-button {
+  display: none;
+}
+
 header nav ul li a {
   text-decoration: none;
   color: var(--text);
