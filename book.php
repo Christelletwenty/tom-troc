@@ -25,8 +25,7 @@
   import { getBookById } from "./services/books.js";
 
   document.addEventListener("DOMContentLoaded", () => {
-    getBookById(new URLSearchParams(window.location.search).get('id')).then((book) => { console.log(book);
-      document.querySelector(".book-img").style.backgroundImage = `url(${book.image})`;
+    getBookById(new URLSearchParams(window.location.search).get('id')).then((book) => {      document.querySelector(".book-img").style.backgroundImage = `url(${book.image})`;
       document.querySelector(".titre").innerText = book.titre;
       document.querySelector(".auteur").innerText = "par" + " " + book.auteur;
       document.querySelector(".description").innerText = book.description;

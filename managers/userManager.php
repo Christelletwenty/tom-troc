@@ -75,17 +75,44 @@ class UserManager {
         ]);
     }
 
-    //Update d'un profoil user
-    public function updateUser(User $user) {
+    // Update d'un profil user
+    public function updateUser(User $user): void {
+        // On prépare les paramètres communs
+        $params = [
+            'id'       => $user->getId(),
+            'username' => strtolower($user->getUsername()),
+            'email'    => $user->getEmail(),
+        ];
 
-        $updateUserRequest = 'UPDATE user SET username = :username, password = :password WHERE id = :id';
+        // Si un nouveau mot de passe est fourni → on le hash et on l'update
+        if ($user->getPassword() !== null && $user->getPassword() !== '') {
+            $sql = 'UPDATE user 
+                    SET username = :username, email = :email, password = :password
+                    WHERE id = :id';
 
-        $updateUserStmt = $this->db->prepare($updateUserRequest);
-        $updateUserStmt->execute ([
-            'username' => $user->getUsername(),
-            'password' => $user->getPassword()
-        ]);
+            $params['password'] = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+        } else {
+            // Sinon, on ne touche pas au mot de passe
+            $sql = 'UPDATE user 
+                    SET username = :username, email = :email
+                    WHERE id = :id';
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
     }
+
+    //update image d'un user
+    public function updateUserImage(int $userId, string $imagePath): void {
+    $sql = 'UPDATE user SET image = :image WHERE id = :id';
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([
+        'image' => $imagePath,
+        'id'    => $userId,
+    ]);
+}
+
 }
 
 ?>

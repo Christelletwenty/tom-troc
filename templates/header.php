@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,12 @@
             <ul>
                 <li><a href="messages.php" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
                 <li><a href="account.php" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
+
+            <?php if(isset($_SESSION['currentUserId'])):?>
+                <li><a href="logout.php" class="logout">Déconnexion</a></li>
+                <?php else: ?>
                 <li><a href="login.php" <?php echo isset($selectedMenu) && $selectedMenu === 'login' ? 'class="active"' : ''; ?>>Connexion</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

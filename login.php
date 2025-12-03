@@ -15,7 +15,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required><br><br>
 
-            <button type="button" id="submit-login">S'inscrire</button>
+            <button type="button" id="submit-login">Se connecter</button>
 
             <span class="register">Pas de compte ? <a href="createAccount.php">Inscrivez-vous</a></span>
         </form>

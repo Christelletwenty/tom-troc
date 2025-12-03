@@ -7,6 +7,20 @@ class LivreManager {
         $this->db = $db;
     }
 
+    //Récupérer tous les livres un nombre par user
+    public function countBooksByUserId(int $userId): int {
+
+    $countBooksByUserIdRequest = 'SELECT COUNT(*) FROM livre WHERE user_id = :user_id';
+
+    $countBooksByUserIdStmt = $this->db->prepare($countBooksByUserIdRequest);
+    $countBooksByUserIdStmt->execute([
+        'user_id' => $userId,
+    ]);
+
+    return (int) $countBooksByUserIdStmt->fetchColumn();
+}
+
+
     //Récupérer des livres par userId
     public function getBooksByUserId(int $userId) {
 
@@ -18,7 +32,7 @@ class LivreManager {
             'user_id' => $userId
         ] );
 
-        return $getBooksStmt->fetch();
+        return $getBooksStmt->fetchAll();
 
     }
 
