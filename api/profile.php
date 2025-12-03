@@ -1,5 +1,4 @@
 <?php
-
 require_once '../config/database.php';
 require_once '../managers/userManager.php';
 require_once '../managers/livreManager.php';

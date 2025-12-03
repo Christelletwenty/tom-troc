@@ -124,7 +124,7 @@ class LivreManager {
 
         $updateBookRequest = 'UPDATE livre SET titre = :titre, auteur = :auteur, image = :image, description = :description, dispo = :dispo WHERE id = :id AND user_id = :user_id';
 
-        $udpateBookStmt = $this->db->prepare($updateBookRequest);
+        $updateBookStmt = $this->db->prepare($updateBookRequest);
         $updateBookStmt->execute ([
             'titre' => $livre->getTitre(),
             'auteur' => $livre->getAuteur(),

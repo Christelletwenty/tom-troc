@@ -9,7 +9,6 @@ export const getConnectedUser = () => {
   });
 };
 
-// On garde updateUser pour plus tard, quand ton backend user.php sera prêt
 export const updateUser = (email, password, username) => {
   const body = new URLSearchParams();
   body.append("email", email);
@@ -23,6 +22,56 @@ export const updateUser = (email, password, username) => {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const updateBook = (id, titre, auteur, image, description, dispo) => {
+  const body = new URLSearchParams();
+  body.append("action", "update");
+  body.append("id", id);
+  body.append("titre", titre);
+  body.append("auteur", auteur);
+  body.append("image", image);
+  body.append("description", description);
+  body.append("dispo", dispo);
+
+  return fetch("api/books.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const deleteBook = (id) => {
+  const body = new URLSearchParams();
+  body.append("action", "delete");
+  body.append("id", id);
+
+  return fetch("api/books.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body,
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const getUserBooks = () => {
+  return fetch("api/books.php", {
+    method: "GET",
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);

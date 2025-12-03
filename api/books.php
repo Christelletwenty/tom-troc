@@ -1,5 +1,4 @@
 <?php 
-
 require_once '../config/database.php';
 require_once '../managers/livreManager.php';
 
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $currentUserId = $_SESSION['currentUserId'];
 
     $livre = new Livre();
-    $livre-setId($id);
+    $livre->setId($id);
     $livre->setTitre($titre);
     $livre->setAuteur($auteur);
     $livre->setImage($image);
@@ -54,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $livre->setDispo($dispo);
     $livre->setUserId($currentUserId);
 
-    $booksManager->updateBook($livre, $currentUserId);
+    $booksManager->updateBook($livre);
 
     echo json_encode(['succès' => 'Livre mis à jour']);
     
@@ -66,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $currentUserId = $_SESSION['currentUserId'];
     $id = $_POST['id'];
 
-    $booksManager->deleteBook($currentUserId, $id);
+    $booksManager->deleteBook($id);
     echo json_encode(['succès' => 'Livre supprimé']);
     return;
     //Récupération de tous les livres par userId
@@ -74,17 +73,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $books = $booksManager->getBooksByUserId($_GET['user_id']);
     echo json_encode($books);
     return;
-    //Récupération de tous les livres par username
 
 } else if (isset($_GET['id'])) {
     $book = $booksManager->getBookById($_GET['id']);
     echo json_encode($book);
     return;
-    //Récupération de tous les livres
+
+} else if (isset($_SESSION['currentUserId'])) {
+    // cas "par défaut" pour un utilisateur connecté (Mon compte)
+    $books = $booksManager->getBooksByUserId($_SESSION['currentUserId']);
+    echo json_encode($books);
+    return;
+
 } else {
+    // fallback : tous les livres si pas connecté
     $books = $booksManager->findAllBooks();
     echo json_encode($books);
     return;
 }
-
 ?>
