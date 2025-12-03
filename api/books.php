@@ -1,15 +1,56 @@
 <?php 
+
 require_once '../config/database.php';
 require_once '../managers/livreManager.php';
 
 $booksManager = new LivreManager($db);
 
-//Ajout d'un livre
+// Si POST mais pas connecté → refus
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId'])) {
     http_response_code(401);
     echo json_encode(['erreur' => 'Utilisateur non authentifié']);
     return;
-} else if (isset($_POST['titre']) && isset($_POST['auteur']) && isset($_POST['image']) && isset($_POST['description']) && isset($_POST['dispo'])) {
+}
+
+//Upload d'une nouvelle image
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image']) && isset($_POST['book_id'])) {
+
+    $bookId = (int) $_POST['book_id'];
+    $file   = $_FILES['image'];
+
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        header('Location: ../updateBook.php?id=' . $bookId);
+        return;
+    }
+
+    // Dossier de destination (par ex. assets/uploads/books/)
+    $uploadDir = '../assets/uploads/books/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0775, true);
+    }
+
+    $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $extension = strtolower($extension) ?: 'jpg';
+
+    $filename   = 'book_' . $bookId . '_' . time() . '.' . $extension;
+    $destPath   = $uploadDir . $filename;
+    $publicPath = 'assets/uploads/books/' . $filename; // stocké en BDD
+
+    if (!move_uploaded_file($file['tmp_name'], $destPath)) {
+        header('Location: ../updateBook.php?id=' . $bookId);
+        return;
+    }
+
+    // Mise à jour de l'image en BDD
+    $booksManager->updateBookImage($bookId, $publicPath);
+
+    // Retour sur la page d'édition du livre
+    header('Location: ../updateBook.php?id=' . $bookId);
+    return;
+}
+
+//création d'un livre
+if (isset($_POST['titre']) && isset($_POST['auteur']) && isset($_POST['image']) && isset($_POST['description']) && isset($_POST['dispo']) && !isset($_POST['id'])) {
     $titre = $_POST['titre'];
     $auteur = $_POST['auteur'];
     $image = $_POST['image'];
@@ -17,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $dispo = $_POST['dispo'];
     $user_id = $_SESSION['currentUserId'];
 
-    //Récupération de l'id de l'utilisateur qui est authentifié
     $currentUserId = $_SESSION['currentUserId'];
 
     $livre = new Livre();
@@ -31,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $booksManager->createBook($livre);
     echo json_encode(['succès' => 'Livre crée']);
     return;
-    //Update d'un book
-    //Vérification si l'utilisateur est bien authentifié
+
+   //update d'un livre
 } else if (isset($_POST['id']) && isset($_POST['titre']) && isset($_POST['auteur']) && isset($_POST['image']) && isset($_POST['description']) && isset($_POST['dispo'])) {
     $id = $_POST['id'];
     $titre = $_POST['titre'];
@@ -41,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $description = $_POST['description'];
     $dispo = $_POST['dispo'];
 
-    //Récupération de l'id de l'utilisateur qui est authentifié
     $currentUserId = $_SESSION['currentUserId'];
 
     $livre = new Livre();
@@ -56,37 +95,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['currentUserId']))
     $booksManager->updateBook($livre);
 
     echo json_encode(['succès' => 'Livre mis à jour']);
-    
-    //Suppresssion d'un livre
-    //Vérification que l'utilisateur soit bien authentifié
+    return;
+
+   //suppression d'un livre
 } else if (isset($_POST['id'])) {
 
-    //Récupération de l'id de l'utilisateur qui est authentifié
     $currentUserId = $_SESSION['currentUserId'];
     $id = $_POST['id'];
 
     $booksManager->deleteBook($id);
     echo json_encode(['succès' => 'Livre supprimé']);
     return;
-    //Récupération de tous les livres par userId
+
+    //récup livre par user id
 } else if (isset($_GET['user_id'])) {
     $books = $booksManager->getBooksByUserId($_GET['user_id']);
     echo json_encode($books);
     return;
 
+    //récupérer livre par id
 } else if (isset($_GET['id'])) {
     $book = $booksManager->getBookById($_GET['id']);
     echo json_encode($book);
     return;
 
+    //récupérer les livres du user connecté
 } else if (isset($_SESSION['currentUserId'])) {
-    // cas "par défaut" pour un utilisateur connecté (Mon compte)
     $books = $booksManager->getBooksByUserId($_SESSION['currentUserId']);
     echo json_encode($books);
     return;
 
+    //récupérer tous les livres si pas connecté
 } else {
-    // fallback : tous les livres si pas connecté
     $books = $booksManager->findAllBooks();
     echo json_encode($books);
     return;

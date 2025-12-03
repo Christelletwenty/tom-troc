@@ -521,6 +521,138 @@ h1 {
   text-decoration: underline;
 }
 
+/** UPDATE BOOK SECTION STYLE **/
+
+.update-book {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 32px 40px 40px;
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  column-gap: 48px;
+  row-gap: 24px;
+  background: white;
+}
+
+.update-book h1 {
+  grid-column: 1 / -1;
+  margin: 0 0 24px;
+  font-size: 26px;
+  font-weight: 600;
+  color: #222;
+}
+
+.update-book .img {
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: #e6ebf2;
+}
+
+.book-image-form {
+  width: 100%;
+}
+
+.book-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.update-book #book-image {
+  display: block;
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.book-image-input {
+  display: none;
+}
+
+.book-image-edit {
+  display: inline-block;
+  margin: 10px 0 16px 16px;
+  font-size: 13px;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.book-image-wrapper:hover #book-image {
+  filter: brightness(0.97);
+}
+
+.book-image-wrapper:hover .book-image-edit {
+  color: #111;
+}
+
+.form-update form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-update br {
+  display: none;
+}
+
+.form-update label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.form-update input[type="text"],
+.form-update textarea,
+.form-update select {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #d9e1eb;
+  background-color: #f3f7fc;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #222;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-update textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.form-update select {
+  height: 40px;
+}
+
+/* Bouton Valider */
+#submit-update {
+  align-self: flex-end;
+  margin-top: 12px;
+  padding: 10px 32px;
+  border-radius: 999px;
+  border: none;
+  background-color: #209653;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+#submit-update:hover {
+  background-color: #187443;
+}
+
+#submit-update:active {
+  transform: scale(0.98);
+}
+
 /** LOGIN SECTION STYLE **/
 
 .connexion {

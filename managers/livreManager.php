@@ -135,5 +135,20 @@ class LivreManager {
             'user_id' => $_SESSION['currentUserId']
         ]);
     }
+
+    // Met à jour uniquement l'image d'un livre
+    public function updateBookImage(int $bookId, string $imagePath): void
+    {
+        $updateBookImageRequest = 'UPDATE livre 
+                SET image = :image 
+                WHERE id = :id AND user_id = :user_id';
+
+        $supdateBookImageStmt = $this->db->prepare($updateBookImageRequest);
+        $supdateBookImageStmt->execute([
+            'image'   => $imagePath,
+            'id'      => $bookId,
+            'user_id' => $_SESSION['currentUserId'],
+        ]);
+    }
 }
 ?>

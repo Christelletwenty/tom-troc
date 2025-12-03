@@ -79,3 +79,36 @@ export const getUserBooks = () => {
     return response.json();
   });
 };
+
+export const createBook = (titre, auteur, image, description, dispo) => {
+  const body = new URLSearchParams();
+  body.append("titre", titre);
+  body.append("auteur", auteur);
+  body.append("image", image);
+  body.append("description", description);
+  body.append("dispo", dispo);
+
+  return fetch("api/books.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body,
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const getBookById = (id) => {
+  return fetch(`api/books.php?id=${encodeURIComponent(id)}`, {
+    method: "GET",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json(); // un seul livre { id, titre, auteur, image, description, dispo, ... }
+  });
+};

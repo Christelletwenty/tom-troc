@@ -41,6 +41,7 @@
         </div>
 
         <div class="my-books">
+          <button id="add-book-btn" class="add-book-btn">+ Ajouter un livre</button>
             <table class="books-table">
                 <thead>
                     <tr>
@@ -123,7 +124,7 @@
                     <button type="button" class="delete-book">Supprimer</button>
                 </td>
               `;
-
+                
               tbody.appendChild(tr);
             });
           })
@@ -158,7 +159,7 @@
           }
 
           //
-          if (target.classList.contains("edit-book")) {
+          /* if (target.classList.contains("edit-book")) {
             const titleSpan = row.querySelector(".book-title");
             const authorSpan = row.querySelector(".book-author");
             const descriptionSpan = row.querySelector(".book-description");
@@ -201,6 +202,10 @@
                 console.error("Erreur lors de la mise à jour du livre", error);
                 alert("Erreur lors de la mise à jour du livre.");
               });
+          } */
+         
+        if (target.classList.contains("edit-book")) {
+            window.location.href = `updateBook.php?id=${id}`;
           }
         });
 
@@ -220,6 +225,11 @@
               });
         });
     });
+
+    document.getElementById("add-book-btn").addEventListener("click", () => {
+      window.location.href = "addBook.php";
+    });
+
 </script>
 
 <?php include 'templates/footer.php'; ?>
