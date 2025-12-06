@@ -102,10 +102,152 @@ main {
   background-color: var(--background);
 }
 
+/** ACCUEIL SECTION STYLE **/
+
+section {
+  width: clamp(300px, 90vw, 980px);
+  padding: 0 24px;
+}
+
+.content {
+  display: flex;
+  height: fit-content;
+}
+
+.container.grey {
+  background-color: var(--neutral);
+}
+
+.container {
+  padding: 60px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container h1 {
+  align-self: unset;
+}
+
+article {
+  display: flex;
+  flex: 0 0 50%;
+  flex-direction: column;
+  padding: 3rem 2rem;
+  justify-content: center;
+  gap: 1rem;
+}
+
+article h1 {
+  margin: 0;
+}
+
+article button {
+  width: fit-content;
+}
+
+aside {
+  display: flex;
+  flex: 0 0 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+aside img {
+  max-width: 100%;
+}
+
+.global-container {
+  background-color: var(--neutral);
+}
+
+.container h1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.how-it-works {
+  padding: 80px 20px 120px;
+  text-align: center;
+}
+
+.how-subtitle {
+  max-width: 640px;
+  margin: 0 auto 60px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.container-infos {
+  max-width: 1100px;
+  margin: 0 auto 60px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+
+.info-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 32px;
+  min-width: 220px;
+  max-width: 260px;
+  min-height: 160px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.info-card p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.values-section {
+  background-color: #f5f3ef;
+  padding: 120px 20px 140px;
+}
+
+.values-content {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.values-content h1 {
+  font-size: 40px;
+  font-weight: 500;
+  margin: 0 0 32px;
+}
+
+.values-text {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #333;
+  margin: 0 0 18px;
+}
+
+.values-signature {
+  margin-top: 28px;
+  font-size: 14px;
+  font-style: italic;
+  color: #a0a0a0;
+}
+
+.values-illustration {
+  display: block;
+  margin: 60px 0 0 auto;
+  max-width: 220px;
+}
+
 /** BOOK SECTION STYLE **/
 
-.book-content,
-section article {
+.book-content {
   width: clamp(300px, 90vw, 980px);
   margin: 60px auto 80px;
   padding: 0 24px;

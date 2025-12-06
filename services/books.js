@@ -1,4 +1,4 @@
-export const getAllBooksByUsername = () => {
+export const getAllBooks = () => {
   return fetch("api/books.php", {
     method: "GET",
     headers: {

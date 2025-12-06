@@ -26,10 +26,10 @@
 
 
 <script type="module">
-  import { getAllBooksByUsername } from "./services/books.js";
+  import { getAllBooks } from "./services/books.js";
 
   document.addEventListener("DOMContentLoaded", () => {
-    getAllBooksByUsername().then((books) => {
+    getAllBooks().then((books) => {
 
       books.forEach((book) => {
         const booksList = document.getElementById("books-list");
