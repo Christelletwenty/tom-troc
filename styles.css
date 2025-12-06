@@ -410,6 +410,139 @@ li.book:first-child {
   flex-shrink: 0;
 }
 
+/** SEND MSG BOOK SECTION STYLE **/
+
+/* ---- CARTE PROFIL ---- */
+.user-profile-page {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-profile-layout {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  width: clamp(300px, 90vw, 1280px);
+}
+
+.user-profile-card {
+  width: 330px;
+  max-height: 550px;
+  padding: 48px 40px;
+  background: white;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-profile-avatar-wrapper {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.user-profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-profile-separator {
+  margin: 30px 0;
+  border: none;
+  border-top: 1px solid #efefef;
+}
+
+/* Nom */
+.user-profile-username {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Membre depuis */
+.user-profile-created {
+  display: block;
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* Bibliothèque */
+.user-profile-library-label {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #999;
+}
+
+.user-profile-books-count {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+/* ---- TABLE LIVRES ---- */
+.user-books-container {
+  flex: 1;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.user-books-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-books-table thead th {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  color: #a0a7b2;
+  padding: 2rem 0 1rem 0;
+}
+
+.user-book-row td {
+  padding: 18px 24px;
+}
+
+/* Zebra */
+.user-book-row.even {
+  background: #f6fafc;
+}
+
+.user-book-row.odd {
+  background: white;
+}
+
+/* Images */
+.user-books-photo {
+  width: 70px;
+  height: 90px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.user-books-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 /** ACCOUNT DETAIL SECTION STYLE **/
 
 .my-account {
