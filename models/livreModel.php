@@ -71,7 +71,7 @@
             return $this->user_name;
         } 
 
-        public function setUser($userName) {
+        public function setUserName($userName) {
             return $this->user_name = $userName;
         }
 

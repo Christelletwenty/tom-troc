@@ -54,7 +54,6 @@ if (!isset($_SESSION['currentUserId'])
     $email    = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
 
-    // On récupère le user depuis la DB
     $user = $userManager->getUserById($userId);
 
     if (!$user) {
@@ -69,12 +68,9 @@ if (!isset($_SESSION['currentUserId'])
         $user->setEmail($email);
     }
 
-    // 👉 ICI : on décide clairement ce qu'on fait du password
     if ($password !== null && trim($password) !== "") {
-        // Nouveau mot de passe en clair → sera hashé dans updateUser()
         $user->setPassword($password);
     } else {
-        // Aucun nouveau mot de passe → on indique au manager de NE PAS le toucher
         $user->setPassword(null);
     }
 
@@ -84,9 +80,17 @@ if (!isset($_SESSION['currentUserId'])
 
     // Récupérer un user par id
 } else if (isset($_GET['id'])) {
-    $user = $userManager->getUserById($_GET['id']);
+     $user = $userManager->getUserById((int) $_GET['id']);
+
     if ($user) {
-        echo json_encode($user);
+        $response = [
+            'id'         => $user->getId(),
+            'username'   => $user->getUsername(),
+            'image'      => $user->getImage(),
+            'created_at' => $user->getCreatedAt(),
+        ];
+
+        echo json_encode($response);
         return;
     } else {
         http_response_code(404);

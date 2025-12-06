@@ -69,8 +69,12 @@ export const deleteBook = (id) => {
   });
 };
 
-export const getUserBooks = () => {
-  return fetch("api/books.php", {
+export const getUserBooks = (userId = null) => {
+  const url = userId
+    ? `api/books.php?user_id=${encodeURIComponent(userId)}`
+    : "api/books.php";
+
+  return fetch(url, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
@@ -110,6 +114,17 @@ export const createBook = (
 
 export const getBookById = (id) => {
   return fetch(`api/books.php?id=${encodeURIComponent(id)}`, {
+    method: "GET",
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok " + response.statusText);
+    }
+    return response.json();
+  });
+};
+
+export const getUserById = (id) => {
+  return fetch(`api/user.php?id=${encodeURIComponent(id)}`, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {

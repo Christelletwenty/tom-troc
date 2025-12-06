@@ -145,12 +145,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     return;
 
     //récupérer les livres du user connecté
-} else if (isset($_SESSION['currentUserId'])) {
-    $books = $booksManager->getBooksByUserId($_SESSION['currentUserId']);
-    echo json_encode($books);
-    return;
-
-    //récupérer tous les livres si pas connecté
 } else {
     $books = $booksManager->findAllBooks();
     echo json_encode($books);

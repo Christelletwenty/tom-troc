@@ -77,91 +77,92 @@
             document.querySelector("#email").value = user.email;
             document.querySelector("#password").value = "";
             document.querySelector("#username").value = user.user_name;
+
+            // Une fois qu'on a le currentUser, on récupère ses lvres
+            //Récupération des livres de l'utilisateur
+            const tbody = document.getElementById("user-books-list");
+
+            getUserBooks(user.id)
+              .then((books) => {
+                console.log("Livres utilisateur :", books);
+                tbody.innerHTML = "";
+
+                books.forEach((book) => {
+                  const tr = document.createElement("tr");
+                  tr.classList.add("book-row");
+                  tr.dataset.id = book.id;
+
+                  tr.innerHTML = `
+                    <td class="col-photo">
+                        <img src="${book.image || ''}" alt="${book.titre || ''}" class="book-photo">
+                    </td>
+
+                    <td class="col-title">
+                        <span class="book-title">${book.titre || ''}</span>
+                    </td>
+
+                    <td class="col-author">
+                        <span class="book-author">${book.auteur || ''}</span>
+                    </td>
+
+                    <td class="col-description">
+                        <span class="book-description">${book.description || ''}</span>
+                    </td>
+
+                    <td class="col-dispo">
+                        <span class="book-dispo" data-dispo="${book.dispo}">
+                            ${String(book.dispo) === "1" ? "Disponible" : "Indisponible"}
+                        </span>
+                    </td>
+
+                    <td class="col-action">
+                        <button type="button" class="edit-book">Éditer</button>
+                        <button type="button" class="delete-book">Supprimer</button>
+                    </td>
+                  `;
+                    
+                  tbody.appendChild(tr);
+                });
+              })
+              .catch((error) => {
+                console.error("Erreur lors de la récupération des livres", error);
+              });
+
+              //Gestion de la suppression et update
+              tbody.addEventListener("click", (event) => {
+                const target = event.target;
+                const row = target.closest(".book-row");
+                if (!row) return;
+
+                const id = row.dataset.id;
+
+                //SUPPRESSION
+                if (target.classList.contains("delete-book")) {
+                  if (!confirm("Voulez-vous vraiment supprimer ce livre ?")) {
+                    return;
+                  }
+
+                  //suppression du livre
+                  deleteBook(id)
+                    .then((data) => {
+                      console.log("Livre supprimé", data);
+                      row.remove();
+                    })
+                    .catch((error) => {
+                      console.error("Erreur lors de la suppression du livre", error);
+                      alert("Erreur lors de la suppression du livre.");
+                    });
+                }
+              
+              if (target.classList.contains("edit-book")) {
+                  window.location.href = `updateBook.php?id=${id}`;
+                }
+              });
           })
           .catch((error) => {
             // Si pas de user connecté → on retourne vers la page de login
             window.location.href = "login.php";
           });
-
-        //Récupération des livres de l'utilisateur
-        const tbody = document.getElementById("user-books-list");
-
-        getUserBooks()
-          .then((books) => {
-            console.log("Livres utilisateur :", books);
-            tbody.innerHTML = "";
-
-            books.forEach((book) => {
-              const tr = document.createElement("tr");
-              tr.classList.add("book-row");
-              tr.dataset.id = book.id;
-
-              tr.innerHTML = `
-                <td class="col-photo">
-                    <img src="${book.image || ''}" alt="${book.titre || ''}" class="book-photo">
-                </td>
-
-                <td class="col-title">
-                    <span class="book-title">${book.titre || ''}</span>
-                </td>
-
-                <td class="col-author">
-                    <span class="book-author">${book.auteur || ''}</span>
-                </td>
-
-                <td class="col-description">
-                    <span class="book-description">${book.description || ''}</span>
-                </td>
-
-                <td class="col-dispo">
-                    <span class="book-dispo" data-dispo="${book.dispo}">
-                        ${String(book.dispo) === "1" ? "Disponible" : "Indisponible"}
-                    </span>
-                </td>
-
-                <td class="col-action">
-                    <button type="button" class="edit-book">Éditer</button>
-                    <button type="button" class="delete-book">Supprimer</button>
-                </td>
-              `;
-                
-              tbody.appendChild(tr);
-            });
-          })
-          .catch((error) => {
-            console.error("Erreur lors de la récupération des livres", error);
-          });
-
-        //Gestion de la suppression et update
-        tbody.addEventListener("click", (event) => {
-          const target = event.target;
-          const row = target.closest(".book-row");
-          if (!row) return;
-
-          const id = row.dataset.id;
-
-          //SUPPRESSION
-          if (target.classList.contains("delete-book")) {
-            if (!confirm("Voulez-vous vraiment supprimer ce livre ?")) {
-              return;
-            }
-
-            //suppression du livre
-            deleteBook(id)
-              .then((data) => {
-                console.log("Livre supprimé", data);
-                row.remove();
-              })
-              .catch((error) => {
-                console.error("Erreur lors de la suppression du livre", error);
-                alert("Erreur lors de la suppression du livre.");
-              });
-          }
-         
-        if (target.classList.contains("edit-book")) {
-            window.location.href = `updateBook.php?id=${id}`;
-          }
-        });
 
         //Gestion du bouton d'édition du profil
         document.getElementById("submit-creation").addEventListener('click', () => {

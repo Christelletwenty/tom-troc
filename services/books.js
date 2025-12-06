@@ -15,3 +15,12 @@ export const getBookById = (id) => {
     },
   }).then((response) => response.json());
 };
+
+export const getBookUserById = (id) => {
+  return fetch("api/books.php?user_id=" + id, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  }).then((response) => response.json());
+};
