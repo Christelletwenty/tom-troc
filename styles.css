@@ -327,92 +327,92 @@ li.book:first-child {
 /** BOOK DETAIL SECTION STYLE **/
 
 .book-detail {
+  margin: 40px auto 80px;
+  border-radius: 24px;
+  overflow: hidden;
   display: flex;
-  height: 100%;
-  background-color: var(--background);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06);
+  width: clamp(300px, 90vw, 1280px);
+  min-height: 100vh;
 }
 
 .book-img {
-  display: flex;
-  flex: 0 0 50%;
-  align-items: center;
-  justify-content: center;
+  flex: 1.1;
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   background-repeat: no-repeat;
+  min-height: 520px;
 }
 
 .book-info {
+  flex: 1;
+  padding: 48px 64px;
   display: flex;
-  flex: 0 0 50%;
   flex-direction: column;
-  padding: 3rem 2rem;
-  align-items: center;
-}
-
-.book-info > * {
-  width: clamp(320px, 485px, 100%);
 }
 
 .book-info .titre {
-  margin: 0 0 8px;
-  font-size: 40px;
-  line-height: 1.2;
+  font-size: 36px;
   font-weight: 500;
+  margin: 0 0 8px;
 }
 
 .book-info .auteur {
-  margin: 0 0 28px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
+  margin: 0 0 24px;
 }
 
 .book-info hr {
-  width: 40px;
-  height: 1px;
   border: none;
+  border-top: 1px solid;
   margin: 0 0 32px;
 }
 
 .book-info h3 {
-  margin: 0 0 12px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
+  margin: 0 0 12px;
 }
 
 .book-info .description {
-  margin: 0 0 40px;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.7;
-  white-space: pre-line;
+  margin: 0 0 32px;
 }
 
 .book-info .proprio {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  margin: 0 0 40px;
-  padding: 10px 18px;
+  gap: 10px;
   border-radius: 999px;
+  padding: 10px 18px 10px 10px;
   font-size: 14px;
-  font-weight: 500;
+  margin: 0 0 40px;
 }
 
 .book-info .proprio::before {
   content: "";
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: #d0d0d0;
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
+  display: inline-block;
+}
+
+.book-info #send-msg:hover {
+  background-color: #31935b;
+  box-shadow: 0 10px 24px rgba(60, 168, 106, 0.4);
+  transform: translateY(-1px);
+}
+
+.book-info #send-msg:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 16px rgba(60, 168, 106, 0.3);
 }
 
 /** SEND MSG BOOK SECTION STYLE **/
 
-/* ---- CARTE PROFIL ---- */
 .user-profile-page {
   display: flex;
   height: 100%;
