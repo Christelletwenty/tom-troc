@@ -49,21 +49,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image']) && isset($_
     return;
 }
 
-//création d'un livre
-if (isset($_POST['titre']) && isset($_POST['auteur']) && isset($_POST['image']) && isset($_POST['description']) && isset($_POST['dispo']) && !isset($_POST['id'])) {
+// création d'un livre
+if ($_SERVER['REQUEST_METHOD'] === 'POST'
+    && isset($_POST['titre'])
+    && isset($_POST['auteur'])
+    && isset($_POST['description'])
+    && !isset($_POST['id'])) {
+
     $titre = $_POST['titre'];
     $auteur = $_POST['auteur'];
-    $image = $_POST['image'];
     $description = $_POST['description'];
-    $dispo = $_POST['dispo'];
-    $user_id = $_SESSION['currentUserId'];
-
+    $dispo = isset($_POST['dispo']) ? $_POST['dispo'] : 1;
     $currentUserId = $_SESSION['currentUserId'];
+
+    $imagePath = ''; // par défaut : pas d'image
+
+    // Si un fichier "image" a été envoyé, on tente l'upload
+    if (!empty($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $file = $_FILES['image'];
+
+        $uploadDir = '../assets/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+
+        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $extension = strtolower($extension ?: 'jpg');
+
+        $filename   = 'book_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $extension;
+        $destPath   = $uploadDir . $filename;
+        $publicPath = 'assets/' . $filename;
+
+        if (move_uploaded_file($file['tmp_name'], $destPath)) {
+            $imagePath = $publicPath;
+        }
+    }
 
     $livre = new Livre();
     $livre->setTitre($titre);
     $livre->setAuteur($auteur);
-    $livre->setImage($image);
+    $livre->setImage($imagePath);
     $livre->setDescription($description);
     $livre->setDispo($dispo);
     $livre->setUserId($currentUserId);

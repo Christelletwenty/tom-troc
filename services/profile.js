@@ -80,20 +80,26 @@ export const getUserBooks = () => {
   });
 };
 
-export const createBook = (titre, auteur, image, description, dispo) => {
-  const body = new URLSearchParams();
-  body.append("titre", titre);
-  body.append("auteur", auteur);
-  body.append("image", image);
-  body.append("description", description);
-  body.append("dispo", dispo);
+export const createBook = (
+  titre,
+  auteur,
+  description,
+  dispo = "1",
+  imageFile = null
+) => {
+  const formData = new FormData();
+  formData.append("titre", titre);
+  formData.append("auteur", auteur);
+  formData.append("description", description);
+  formData.append("dispo", dispo);
+
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
 
   return fetch("api/books.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
+    body: formData,
   }).then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
@@ -109,6 +115,6 @@ export const getBookById = (id) => {
     if (!response.ok) {
       throw new Error("Network response was not ok " + response.statusText);
     }
-    return response.json(); // un seul livre { id, titre, auteur, image, description, dispo, ... }
+    return response.json();
   });
 };

@@ -104,7 +104,8 @@ main {
 
 /** BOOK SECTION STYLE **/
 
-.book-content {
+.book-content,
+section article {
   width: clamp(300px, 90vw, 980px);
   margin: 60px auto 80px;
   padding: 0 24px;

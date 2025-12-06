@@ -157,52 +157,6 @@
                 alert("Erreur lors de la suppression du livre.");
               });
           }
-
-          //
-          /* if (target.classList.contains("edit-book")) {
-            const titleSpan = row.querySelector(".book-title");
-            const authorSpan = row.querySelector(".book-author");
-            const descriptionSpan = row.querySelector(".book-description");
-            const dispoSpan = row.querySelector(".book-dispo");
-            const imageEl = row.querySelector(".book-photo");
-
-            const currentTitle = titleSpan.innerText;
-            const currentAuthor = authorSpan.innerText;
-            const currentDescription = descriptionSpan.innerText;
-            const currentDispo = dispoSpan.dataset.dispo || "1";
-            const imageSrc = imageEl.getAttribute("src") || "";
-
-            const newTitle = prompt("Nouveau titre :", currentTitle);
-            if (newTitle === null) return;
-
-            const newAuthor = prompt("Nouvel auteur :", currentAuthor);
-            if (newAuthor === null) return;
-
-            const newDescription = prompt("Nouvelle description :", currentDescription);
-            if (newDescription === null) return;
-
-            const dispoAnswer = confirm("Ce livre est-il disponible ? (OK = oui, Annuler = non)");
-            const newDispo = dispoAnswer ? "1" : "0";
-
-            //update
-            updateBook(id, newTitle, newAuthor, imageSrc, newDescription, newDispo)
-              .then((data) => {
-                console.log("Livre mis à jour", data);
-
-                // Mise à jour de l'affichage
-                titleSpan.innerText = newTitle;
-                authorSpan.innerText = newAuthor;
-                descriptionSpan.innerText = newDescription;
-                dispoSpan.dataset.dispo = newDispo;
-                dispoSpan.innerText = newDispo === "1" ? "Disponible" : "Indisponible";
-
-                alert("Livre mis à jour avec succès !");
-              })
-              .catch((error) => {
-                console.error("Erreur lors de la mise à jour du livre", error);
-                alert("Erreur lors de la mise à jour du livre.");
-              });
-          } */
          
         if (target.classList.contains("edit-book")) {
             window.location.href = `updateBook.php?id=${id}`;
