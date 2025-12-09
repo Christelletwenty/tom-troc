@@ -7,6 +7,9 @@ USE tomtroc;
 
 -- On supprime les tables si elles existent déjà
 DROP TABLE IF EXISTS commentaire;
+DROP TABLE IF EXISTS message;
+DROP TABLE IF EXISTS conversation_user;
+DROP TABLE IF EXISTS conversation;
 DROP TABLE IF EXISTS livre;
 DROP TABLE IF EXISTS user;
 
@@ -44,7 +47,70 @@ CREATE TABLE livre (
   COLLATE=utf8mb4_unicode_ci;
 
 -- ===========================================
+-- TABLE : conversation
+-- Une conversation (thread) qui regroupe des messages
+-- ===========================================
+CREATE TABLE conversation (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+-- ===========================================
+-- TABLE : conversation_user
+-- Table de jointure N-N entre conversation et user
+-- Un user peut participer à plusieurs conversations
+-- Une conversation peut avoir 1..n users
+-- ===========================================
+CREATE TABLE conversation_user (
+  conversation_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  joined_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (conversation_id, user_id),
+
+  CONSTRAINT fk_conv_user_conversation
+    FOREIGN KEY (conversation_id) REFERENCES conversation(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  CONSTRAINT fk_conv_user_user
+    FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+-- ===========================================
+-- TABLE : message
+-- Un message appartient à UNE conversation et UN user
+-- ===========================================
+CREATE TABLE message (
+  id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  conversation_id INT UNSIGNED NOT NULL,
+  user_id INT UNSIGNED NOT NULL,
+  content TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  read_at DATETIME DEFAULT NULL,
+
+  CONSTRAINT fk_message_conversation
+    FOREIGN KEY (conversation_id) REFERENCES conversation(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+
+  CONSTRAINT fk_message_user
+    FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;
+
+-- ===========================================
 -- TABLE : commentaire
+-- (inchangée, toujours liée à user + livre)
 -- ===========================================
 CREATE TABLE commentaire (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -112,14 +178,14 @@ INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
 );
 
 -- ===========================================
--- LIVRES D'ALEX (DESCRIPTIONS LONGUES)
+-- LIVRES D'ALEX
 -- ===========================================
 INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
 (
   'Harry Potter à l''école des sorciers',
   'J.K. Rowling',
   'assets/hp1.jpg',
-  'Ce premier tome de “Harry Potter” est l''un de ceux qui m''ont donné le goût de la lecture quand j''étais plus jeune. Je me souviens encore de la sensation de découvrir Poudlard pour la première fois, d''imaginer les couloirs, les escaliers qui bougent, les salles de cours et les personnages hauts en couleur. C''est un livre que j''associe beaucoup à la notion de confort : à chaque relecture, j''ai l''impression de retrouver un endroit familier où je me sens bien. Au-delà de la magie et de l''aventure, ce que j''apprécie vraiment, c''est la manière dont il parle de l''amitié, du courage et de la différence sans jamais être trop lourd. C''est un roman accessible, idéal pour se replonger dans une ambiance chaleureuse et réconfortante, que l''on soit ado ou adulte.',
+  'Ce premier tome de “Harry Potter” est l''un de ceux qui m''ont donné le goût de la lecture quand j''étais plus jeune...',
   1,
   @alex_id
 ),
@@ -128,7 +194,7 @@ INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES
   'Le Hobbit',
   'J.R.R. Tolkien',
   'assets/hobbit.jpg',
-  '“Le Hobbit” a pour moi le charme d''un grand conte d''aventure, avec ce côté à la fois léger et épique. J''ai adoré suivre Bilbo, ce personnage qui n''a rien d''un héros au départ et qui se retrouve embarqué bien malgré lui dans une quête qui le dépasse. Ce que le livre m''a apporté, c''est ce sentiment d''évasion totale : on voyage à travers les paysages, on rencontre des créatures étranges, on ressent la peur, l''excitation, l''émerveillement. J''ai aussi beaucoup aimé l''humour discret de Tolkien et la façon dont il joue avec l''idée du confort que l''on quitte pour découvrir quelque chose de plus grand. C''est un roman que je recommande souvent à ceux qui veulent découvrir la fantasy sans se lancer directement dans quelque chose de trop long ou trop complexe.',
+  '“Le Hobbit” a pour moi le charme d''un grand conte d''aventure...',
   1,
   @alex_id
 );

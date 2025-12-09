@@ -8,7 +8,6 @@
 
     <div class="user-profile-layout">
 
-        <!-- --- CARTE PROFIL --- -->
         <div class="user-profile-card">
 
             <form class="user-profile-avatar-form" action="api/upload_avatar.php" method="post" enctype="multipart/form-data">
@@ -31,8 +30,6 @@
 
         </div>
 
-
-        <!-- --- TABLE DES LIVRES --- -->
         <div class="user-books-container">
             <table class="user-books-table">
                 <thead>
