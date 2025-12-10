@@ -4,8 +4,6 @@ $selectedMenu = 'login';
 
 <?php include './templates/header.php'; ?>
 
-<!DOCTYPE html>
-<html lang="en">
 <div class="connexion">
     <div class="form-connexion">
         <form>
@@ -13,7 +11,7 @@ $selectedMenu = 'login';
             <span class="connec">Inscription</span>
 
             <label for="username">Pseudo</label>
-            <input type="username" id="username" name="username" required><br><br>
+            <input type="text" id="username" name="username" required><br><br>
 
             <label for="email"> Adresse email</label>
             <input type="email" id="email" name="email" required><br><br>

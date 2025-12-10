@@ -14,7 +14,10 @@ $selectedMenu = 'books';
     <h3>Description</h3>
     <p class="description"></p>
     <h3>Propriétaire</h3>
-    <p class="proprio"></p>
+    <div class="owner">
+      <img src="assets/default-avatar.png" alt="Avatar du propriétaire" class="owner-avatar">
+      <p class="proprio"></p>
+    </div>
     <button type="button" id="send-msg">Envoyer un message</button>
   </div>
 
@@ -22,6 +25,9 @@ $selectedMenu = 'books';
 
 
 <script type="module">
+  import {
+    getUserById
+  } from './services/profile.js';
   import {
     getBookById
   } from "./services/books.js";
@@ -36,7 +42,12 @@ $selectedMenu = 'books';
       document.querySelector(".auteur").innerText = "par" + " " + book.auteur;
       document.querySelector(".description").innerText = book.description;
       document.querySelector(".proprio").innerText = book.user_name;
+      getUserById(book.user_id).then((user) => {
+        document.querySelector(".owner-avatar").src = user.image;
+      });
+
       document.querySelector("#send-msg").addEventListener("click", () => {
+
         createConversationWithUserId(book.user_id).then((conv) => {
           console.log(conv)
           window.location.href = `index.php?page=messages&conversation_id=${conv.conversation_id}`;

@@ -9,6 +9,7 @@
     <h2 id="conversation-title"></h2>
     <ul id="messages-list"></ul>
     <div class="message-input-bar">
+      <label for="message" class="sr-only">Votre message</label>
       <input
         type="text"
         name="message"

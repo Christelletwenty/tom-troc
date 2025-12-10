@@ -12,7 +12,7 @@ $selectedMenu = 'home';
             <button onclick="location.href='index.php?page=createAccount'">Découvrir</button>
         </article>
         <aside class="section-1">
-            <img src="assets/section-1.jpg" alt="" />
+            <img src="assets/section-1.jpg" alt="Illustration" />
         </aside>
 
     </section>
@@ -24,9 +24,9 @@ $selectedMenu = 'home';
         <ul id="books-list">
             <li class="book">
                 <a href="">
-                    <img src="" alt="">
-                    <h3 class="titre"></h3>
-                    <h2 class="auteur"></h2>
+                    <img src="assets/default-avatar.png" alt="Default illustration">
+                    <h3 class="titre">Titre du livre</h3>
+                    <h2 class="auteur">Auteur du livre</h2>
                     <span class="soldby">Vendu par:</span>
                 </a>
             </li>
@@ -56,7 +56,7 @@ $selectedMenu = 'home';
 </div>
 
 <div class="container-bandeau">
-    <img src="assets/bandeau-img.png">
+    <img src="assets/bandeau-img.png" alt="Illustration">
 </div>
 
 

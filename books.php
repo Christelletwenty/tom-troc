@@ -8,15 +8,16 @@ $selectedMenu = 'books';
 
   <div class="search-bar">
     <span class="exchange-books">Nos livres à l'échange</span>
+    <label for="search-book" class="sr-only">Rechercher un livre</label>
     <input type="text" placeholder=" 🔍 Rechercher un livre" id="search-book">
   </div>
 
   <ul id="books-list">
     <li class="book">
       <a href="">
-        <img src="" alt="">
-        <h3 class="titre"></h3>
-        <h2 class="auteur"></h2>
+        <img src="assets/default-avatar.png" alt="Illustration">
+        <h3 class="titre">Titre du livre</h3>
+        <h2 class="auteur">Auteur du livre</h2>
         <span class="soldby">Vendu par:</span>
       </a>
     </li>
