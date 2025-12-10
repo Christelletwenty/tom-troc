@@ -11,7 +11,8 @@ $messageManager      = new MessageManager($db);
 
 
 //Helper : vérifier que l'user est connecté
-function requireAuth(): int {
+function requireAuth(): int
+{
     if (!isset($_SESSION['currentUserId'])) {
         http_response_code(401);
         echo json_encode(['error' => 'Non connecté']);
@@ -20,34 +21,34 @@ function requireAuth(): int {
     return (int) $_SESSION['currentUserId'];
 }
 
- //Sans paramètre : liste des conversations du user connecté
- //Avec ?conversation_id=X : liste des messages de cette conversation
+//Sans paramètre : liste des conversations du user connecté
+//Avec ?conversation_id=X : liste des messages de cette conversation
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $currentUserId = requireAuth();
 
     if (isset($_GET['conversation_id']) && isset($_GET['participants'])) {
-    $conversationId = (int) $_GET['conversation_id'];
+        $conversationId = (int) $_GET['conversation_id'];
 
-    if ($conversationId <= 0) {
-        http_response_code(400);
-        echo json_encode(['error' => 'conversation_id invalide']);
+        if ($conversationId <= 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'conversation_id invalide']);
+            exit;
+        }
+
+        // Vérifier que le user connecté participe à la conversation
+        $participantsIds = $conversationManager->getParticipants($conversationId);
+        if (!in_array($currentUserId, $participantsIds, true)) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Accès interdit à cette conversation']);
+            exit;
+        }
+
+        // On renvoie id + username + image
+        $infos = $conversationManager->getParticipantInfos($conversationId);
+        echo json_encode($infos);
         exit;
     }
-
-    // Vérifier que le user connecté participe à la conversation
-    $participantsIds = $conversationManager->getParticipants($conversationId);
-    if (!in_array($currentUserId, $participantsIds, true)) {
-        http_response_code(403);
-        echo json_encode(['error' => 'Accès interdit à cette conversation']);
-        exit;
-    }
-
-    // On renvoie id + username + image
-    $infos = $conversationManager->getParticipantInfos($conversationId);
-    echo json_encode($infos);
-    exit;
-}
 
     //GET /api/conversations.php?conversation_id=123
     if (isset($_GET['conversation_id'])) {
@@ -82,16 +83,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 }
 
 
-    //Avec user_id : créer une conversation entre moi et ce user
-    //Avec conversation_id + content : créer un message dans la conversation
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//Avec user_id : créer une conversation entre moi et ce user
+//Avec conversation_id + content : créer un message dans la conversation
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $currentUserId = requireAuth();
+    $currentUserId = requireAuth();
 
-        // On récupère les données POST de façon safe
-        $userId         = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
-        $conversationId = isset($_POST['conversation_id']) ? (int) $_POST['conversation_id'] : 0;
-        $content        = isset($_POST['content']) ? trim($_POST['content']) : '';
+    // On récupère les données POST de façon safe
+    $userId         = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
+    $conversationId = isset($_POST['conversation_id']) ? (int) $_POST['conversation_id'] : 0;
+    $content        = isset($_POST['content']) ? trim($_POST['content']) : '';
 
     //Création d'une nouvelle conversation
     //POST /api/conversations.php avec user_id=X
@@ -113,8 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 'conversation_id' => $existingConvId,
                 'existing'        => true
             ]);
-        exit;
-    }
+            exit;
+        }
 
         // On crée une conversation vide
         $newConversationId = $conversationManager->createConversation();

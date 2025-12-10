@@ -1,19 +1,22 @@
 <?php
 require_once '../models/userModel.php';
 
-class UserManager {
+class UserManager
+{
     private $db;
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
     //Récupération du user par username pour le login
-    public function getUserByEmail(string $email) {
+    public function getUserByEmail(string $email)
+    {
         $getEmailRequest = 'SELECT * FROM user WHERE email = :email';
 
         $getEmailStmt = $this->db->prepare($getEmailRequest);
         $getEmailStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-        $getEmailStmt->execute ([
+        $getEmailStmt->execute([
             //strtolower me retourne une nouvelle variable mais en minuscule
             'email' => strtolower($email)
         ]);
@@ -22,12 +25,13 @@ class UserManager {
     }
 
     //Récupération du user par username pour le login
-    public function getUserByUsername(string $name) {
+    public function getUserByUsername(string $name)
+    {
         $getUserRequest = 'SELECT * FROM user WHERE username = :name';
 
         $getUserlStmt = $this->db->prepare($getUserRequest);
         $getUserlStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-        $getUserlStmt->execute ([
+        $getUserlStmt->execute([
             //strtolower me retourne une nouvelle variable mais en minuscule
             'name' => strtolower($name)
         ]);
@@ -36,21 +40,23 @@ class UserManager {
     }
 
     //Récupération des users par id
-    public function getUserById(int $id) {
+    public function getUserById(int $id)
+    {
 
         $getUserRequest = 'SELECT * FROM user WHERE id = :id';
 
         $getUserStmt = $this->db->prepare($getUserRequest);
         $getUserStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
-        $getUserStmt->execute( [
-                'id' => $id
-            ]);
+        $getUserStmt->execute([
+            'id' => $id
+        ]);
 
         return $getUserStmt->fetch();
     }
 
     //Récupération de tous les users
-    public function findAll() {
+    public function findAll()
+    {
 
         $findAllRequest = 'SELECT * FROM user';
 
@@ -62,12 +68,13 @@ class UserManager {
     }
 
     //Création d'un user
-    public function createUser(User $user) {
+    public function createUser(User $user)
+    {
 
         $createUserRequest = 'INSERT INTO user (username, email, password) VALUES (:username, :email, :password)';
 
         $createuserStmt = $this->db->prepare($createUserRequest);
-        $createuserStmt->execute ([
+        $createuserStmt->execute([
             'username' => strtolower($user->getUsername()),
             'email' => $user->getEmail(),
             //On encrypte le PWD avant de le stocker
@@ -76,7 +83,8 @@ class UserManager {
     }
 
     // Update d'un profil user
-    public function updateUser(User $user): void {
+    public function updateUser(User $user): void
+    {
         // On prépare les paramètres communs
         $params = [
             'id'       => $user->getId(),
@@ -103,16 +111,14 @@ class UserManager {
     }
 
     //update image d'un user
-    public function updateUserImage(int $userId, string $imagePath): void {
-    $sql = 'UPDATE user SET image = :image WHERE id = :id';
+    public function updateUserImage(int $userId, string $imagePath): void
+    {
+        $sql = 'UPDATE user SET image = :image WHERE id = :id';
 
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute([
-        'image' => $imagePath,
-        'id'    => $userId,
-    ]);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            'image' => $imagePath,
+            'id'    => $userId,
+        ]);
+    }
 }
-
-}
-
-?>

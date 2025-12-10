@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once '../config/database.php';
 require_once '../managers/livreManager.php';
@@ -50,11 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image']) && isset($_
 }
 
 // création d'un livre
-if ($_SERVER['REQUEST_METHOD'] === 'POST'
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
     && isset($_POST['titre'])
     && isset($_POST['auteur'])
     && isset($_POST['description'])
-    && !isset($_POST['id'])) {
+    && !isset($_POST['id'])
+) {
 
     $titre = $_POST['titre'];
     $auteur = $_POST['auteur'];
@@ -97,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     echo json_encode(['succès' => 'Livre crée']);
     return;
 
-   //update d'un livre
+    //update d'un livre
 } else if (isset($_POST['id']) && isset($_POST['titre']) && isset($_POST['auteur']) && isset($_POST['image']) && isset($_POST['description']) && isset($_POST['dispo'])) {
     $id = $_POST['id'];
     $titre = $_POST['titre'];
@@ -122,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     echo json_encode(['succès' => 'Livre mis à jour']);
     return;
 
-   //suppression d'un livre
+    //suppression d'un livre
 } else if (isset($_POST['id'])) {
 
     $currentUserId = $_SESSION['currentUserId'];
@@ -150,4 +152,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'
     echo json_encode($books);
     return;
 }
-?>

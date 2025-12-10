@@ -1,5 +1,5 @@
 <?php
-    $selectedMenu = 'books';
+$selectedMenu = 'books';
 ?>
 
 <?php include './templates/header.php'; ?>
@@ -8,7 +8,7 @@
 
   <div class="search-bar">
     <span class="exchange-books">Nos livres à l'échange</span>
-    <input type="text" placeholder=" 🔍 Rechercher un livre" id="search-book" >
+    <input type="text" placeholder=" 🔍 Rechercher un livre" id="search-book">
   </div>
 
   <ul id="books-list">
@@ -26,8 +26,12 @@
 
 
 <script type="module">
-  import { getAllBooks } from "./services/books.js";
-  import { getConnectedUser } from "./services/profile.js";
+  import {
+    getAllBooks
+  } from "./services/books.js";
+  import {
+    getConnectedUser
+  } from "./services/profile.js";
 
   document.addEventListener("DOMContentLoaded", () => {
     Promise.all([getAllBooks(), getConnectedUser().catch(() => null)])
@@ -37,17 +41,17 @@
 
         books.filter(book => book.user_id !== user?.id).forEach((book) => {
 
-        const bookCloneTemplate = template.cloneNode(true);
-  
-        bookCloneTemplate.querySelector("img").src = book.image;
-        bookCloneTemplate.querySelector(".titre").textContent = book.titre;
-        bookCloneTemplate.querySelector(".auteur").textContent = book.auteur;
-        bookCloneTemplate.querySelector(".soldby").innerText = "Vendu par : " + book.user_name;
-        bookCloneTemplate.querySelector("a").href = `index.php?page=book&id=${book.id}`;
+          const bookCloneTemplate = template.cloneNode(true);
 
-        booksList.appendChild(bookCloneTemplate);
+          bookCloneTemplate.querySelector("img").src = book.image;
+          bookCloneTemplate.querySelector(".titre").textContent = book.titre;
+          bookCloneTemplate.querySelector(".auteur").textContent = book.auteur;
+          bookCloneTemplate.querySelector(".soldby").innerText = "Vendu par : " + book.user_name;
+          bookCloneTemplate.querySelector("a").href = `index.php?page=book&id=${book.id}`;
+
+          booksList.appendChild(bookCloneTemplate);
+        });
       });
-    });
 
     document.getElementById("search-book").addEventListener("input", (e) => {
       const searchText = e.target.value.toLowerCase();

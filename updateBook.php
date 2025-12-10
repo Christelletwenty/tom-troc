@@ -1,34 +1,34 @@
 <?php
-    $selectedMenu = 'books';
+$selectedMenu = 'books';
 
-    // Récupérer l'id du livre depuis l'URL
-    $bookId = $_GET['id'] ?? null;
-    if (!$bookId) {
-        // pas d'id → on retourne à la liste
-        header('Location: index.php?page=account');
-        exit;
-    }
+// Récupérer l'id du livre depuis l'URL
+$bookId = $_GET['id'] ?? null;
+if (!$bookId) {
+    // pas d'id → on retourne à la liste
+    header('Location: index.php?page=account');
+    exit;
+}
 ?>
 
 <?php include './templates/header.php'; ?>
 
 <div class="update-book">
     <h1>Modifier les informations</h1>
-        <div class="img">
-    <form class="book-image-form" action="api/upload_book_image.php" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="book_id" value="<?= htmlspecialchars($bookId, ENT_QUOTES) ?>">
+    <div class="img">
+        <form class="book-image-form" action="api/upload_book_image.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="book_id" value="<?= htmlspecialchars($bookId, ENT_QUOTES) ?>">
 
-        <label class="book-image-wrapper">
-            <img id="book-image" alt="Couverture du livre" />
-            <button class="book-image-edit">Modifier la photo</button>
-            <input type="file"
-                   name="image"
-                   accept="image/*"
-                   class="book-image-input"
-                   onchange="this.form.submit()">
-        </label>
-    </form>
-</div>
+            <label class="book-image-wrapper">
+                <img id="book-image" alt="Couverture du livre" />
+                <button class="book-image-edit">Modifier la photo</button>
+                <input type="file"
+                    name="image"
+                    accept="image/*"
+                    class="book-image-input"
+                    onchange="this.form.submit()">
+            </label>
+        </form>
+    </div>
 
     <div class="form-update">
         <form>
@@ -54,7 +54,10 @@
 
 
 <script type="module">
- import { updateBook, getBookById } from './services/profile.js';
+    import {
+        updateBook,
+        getBookById
+    } from './services/profile.js';
 
     const bookId = <?= json_encode($bookId) ?>;
 

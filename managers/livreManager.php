@@ -1,43 +1,47 @@
 <?php
 require_once '../models/livreModel.php';
 
-class LivreManager {
+class LivreManager
+{
     private $db;
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->db = $db;
     }
 
     //Récupérer tous les livres un nombre par user
-    public function countBooksByUserId(int $userId): int {
+    public function countBooksByUserId(int $userId): int
+    {
 
-    $countBooksByUserIdRequest = 'SELECT COUNT(*) FROM livre WHERE user_id = :user_id';
+        $countBooksByUserIdRequest = 'SELECT COUNT(*) FROM livre WHERE user_id = :user_id';
 
-    $countBooksByUserIdStmt = $this->db->prepare($countBooksByUserIdRequest);
-    $countBooksByUserIdStmt->execute([
-        'user_id' => $userId,
-    ]);
+        $countBooksByUserIdStmt = $this->db->prepare($countBooksByUserIdRequest);
+        $countBooksByUserIdStmt->execute([
+            'user_id' => $userId,
+        ]);
 
-    return (int) $countBooksByUserIdStmt->fetchColumn();
-}
+        return (int) $countBooksByUserIdStmt->fetchColumn();
+    }
 
 
     //Récupérer des livres par userId
-    public function getBooksByUserId(int $userId) {
+    public function getBooksByUserId(int $userId)
+    {
 
         $getBooksRequest = 'SELECT * FROM livre WHERE user_id = :user_id';
 
         $getBooksStmt = $this->db->prepare($getBooksRequest);
         $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
-        $getBooksStmt->execute( [
+        $getBooksStmt->execute([
             'user_id' => $userId
-        ] );
+        ]);
 
         return $getBooksStmt->fetchAll();
-
     }
 
     //Récupérer des livres par userId
-    public function getBookById(int $id) {
+    public function getBookById(int $id)
+    {
 
         $getBooksRequest = '
             SELECT
@@ -56,16 +60,16 @@ class LivreManager {
 
         $getBooksStmt = $this->db->prepare($getBooksRequest);
         $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
-        $getBooksStmt->execute( [
+        $getBooksStmt->execute([
             'id' => $id
-        ] );
+        ]);
 
         return $getBooksStmt->fetch();
-
     }
 
     // Récupérer tous les livres
-    public function findAllBooks() {
+    public function findAllBooks()
+    {
 
         $findAllBooksRequest = '
             SELECT
@@ -91,12 +95,13 @@ class LivreManager {
 
 
     //Créer un livre : passer le currentUserId en paramètre (souvent venant de $_SESSION['user_id']).
-    public function createBook(Livre $livre) {
+    public function createBook(Livre $livre)
+    {
 
         $createBookRequest = 'INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES (:titre, :auteur, :image, :description, :dispo, :user_id)';
 
         $createBookStmt = $this->db->prepare($createBookRequest);
-        $createBookStmt->execute ([
+        $createBookStmt->execute([
             'titre' => $livre->getTitre(),
             'auteur' => $livre->getAuteur(),
             'image' => $livre->getImage(),
@@ -108,24 +113,26 @@ class LivreManager {
 
 
     //Supprimer un livre : passer le currentUserId en paramètre (venant de $_SESSION['user_id']).
-    public function deleteBook(int $id) {
+    public function deleteBook(int $id)
+    {
 
         $deleteBookRequest = 'DELETE FROM livre WHERE id = :id AND user_id = :user_id';
 
         $deleteBookStmt = $this->db->prepare($deleteBookRequest);
-        $deleteBookStmt->execute ([
+        $deleteBookStmt->execute([
             'id' => $id,
             'user_id' => $_SESSION['currentUserId']
         ]);
     }
 
     //Mettre à jour un livre
-    public function updateBook(Livre $livre) {
+    public function updateBook(Livre $livre)
+    {
 
         $updateBookRequest = 'UPDATE livre SET titre = :titre, auteur = :auteur, image = :image, description = :description, dispo = :dispo WHERE id = :id AND user_id = :user_id';
 
         $updateBookStmt = $this->db->prepare($updateBookRequest);
-        $updateBookStmt->execute ([
+        $updateBookStmt->execute([
             'titre' => $livre->getTitre(),
             'auteur' => $livre->getAuteur(),
             'image' => $livre->getImage(),
@@ -151,4 +158,3 @@ class LivreManager {
         ]);
     }
 }
-?>

@@ -153,7 +153,7 @@ class ConversationManager
         return $convId !== false ? (int) $convId : null;
     }
 
-    public function getParticipantInfos(int $conversationId): array 
+    public function getParticipantInfos(int $conversationId): array
     {
         $getParticipantsInfoRequest = "
             SELECT u.id, u.username, u.image
@@ -167,7 +167,4 @@ class ConversationManager
 
         return $getParticipantsInfoStmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
 }
-?>

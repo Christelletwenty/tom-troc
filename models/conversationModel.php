@@ -33,4 +33,3 @@ class Conversation implements JsonSerializable
         ];
     }
 }
-?>

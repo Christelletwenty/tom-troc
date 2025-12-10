@@ -1,5 +1,5 @@
 <?php
-    $selectedMenu = 'books';
+$selectedMenu = 'books';
 ?>
 
 <?php include './templates/header.php'; ?>
@@ -40,11 +40,13 @@
 </div>
 
 <script type="module">
-    import { createBook } from './services/profile.js';
+    import {
+        createBook
+    } from './services/profile.js';
 
     const errorEl = document.querySelector('.error');
     const imageInput = document.getElementById('image-input');
-    const bookImage  = document.getElementById('book-image');
+    const bookImage = document.getElementById('book-image');
 
     imageInput.addEventListener('change', () => {
         const file = imageInput.files[0];

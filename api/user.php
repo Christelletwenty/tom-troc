@@ -1,14 +1,16 @@
-<?php 
+<?php
 require_once '../config/database.php';
 require_once '../managers/userManager.php';
 
 $userManager = new UserManager($db);
 
 //Création d'un user (s'il n'est pas connecté)
-if (!isset($_SESSION['currentUserId'])
-    && isset($_POST['username']) 
-    && isset($_POST['email']) 
-    && isset($_POST['password'])) {
+if (
+    !isset($_SESSION['currentUserId'])
+    && isset($_POST['username'])
+    && isset($_POST['email'])
+    && isset($_POST['password'])
+) {
 
     $username = $_POST['username'];
     $email    = $_POST['email'];
@@ -16,7 +18,7 @@ if (!isset($_SESSION['currentUserId'])
 
     // Vérification si le username écrit existe déjà ?
     $isExistingUser = $userManager->getUserByUsername($username);
-    if($isExistingUser) {
+    if ($isExistingUser) {
         http_response_code(409);
         echo json_encode(['erreur' => 'Nom dutilisateur déjà pris']);
         return;
@@ -80,7 +82,7 @@ if (!isset($_SESSION['currentUserId'])
 
     // Récupérer un user par id
 } else if (isset($_GET['id'])) {
-     $user = $userManager->getUserById((int) $_GET['id']);
+    $user = $userManager->getUserById((int) $_GET['id']);
 
     if ($user) {
         $response = [
@@ -104,5 +106,3 @@ if (!isset($_SESSION['currentUserId'])
     echo json_encode($users);
     return;
 }
-
-?>

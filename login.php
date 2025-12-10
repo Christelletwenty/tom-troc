@@ -1,12 +1,12 @@
 <?php
-    session_start();
-    $selectedMenu = 'login';
+session_start();
+$selectedMenu = 'login';
 ?>
 
 <?php include './templates/header.php'; ?>
 
-    <div class="connexion">
-        <div class="form-connexion">
+<div class="connexion">
+    <div class="form-connexion">
         <form>
             <span class="error"></span>
             <span class="connec">Connexion</span>
@@ -20,33 +20,35 @@
 
             <span class="register">Pas de compte ? <a href="index.php?page=createAccount">Inscrivez-vous</a></span>
         </form>
-        </div>
-        <div class="mask-group"></div>
     </div>
+    <div class="mask-group"></div>
+</div>
 
-    <script type="module">
-        import { login } from './services/login.js';
+<script type="module">
+    import {
+        login
+    } from './services/login.js';
 
-        document.getElementById('submit-login').addEventListener('click', () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+    document.getElementById('submit-login').addEventListener('click', () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-            if (!email || !password) {
-                document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
-                return;
-            }
+        if (!email || !password) {
+            document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
+            return;
+        }
 
-            login(email, password)
-                .then((data) => {
-                    console.log("Success:", data);
-                    // Rediriger vers la page d'accueil après la connexion réussie
-                    window.location.href = "index.php";
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    document.querySelector('.error').innerText = "Identifiant ou mot de passe incorrect";
-                });
-        });
-    </script>
+        login(email, password)
+            .then((data) => {
+                console.log("Success:", data);
+                // Rediriger vers la page d'accueil après la connexion réussie
+                window.location.href = "index.php";
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                document.querySelector('.error').innerText = "Identifiant ou mot de passe incorrect";
+            });
+    });
+</script>
 
 <?php include './templates/footer.php'; ?>

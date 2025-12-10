@@ -66,4 +66,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
     echo json_encode(['success' => 'Message envoyé']);
     return;
 }
-?>

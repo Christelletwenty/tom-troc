@@ -6,5 +6,6 @@
             <li>Tom Troc&copy;</li>
         </ul>
     </footer>
-</body>
-</html>
+    </body>
+
+    </html>

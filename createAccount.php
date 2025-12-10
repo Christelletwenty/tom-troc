@@ -1,13 +1,13 @@
 <?php
-    $selectedMenu = 'login';
+$selectedMenu = 'login';
 ?>
 
 <?php include './templates/header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <div class="connexion">
-        <div class="form-connexion">
+<div class="connexion">
+    <div class="form-connexion">
         <form>
             <span class="error"></span>
             <span class="connec">Inscription</span>
@@ -25,31 +25,35 @@
 
             <span class="register">Déjà inscrit ? <a href="index.php?page=login">Connectez-vous</a></span>
         </form>
-        </div>
-        <div class="mask-group"></div>
-    </div> 
+    </div>
+    <div class="mask-group"></div>
+</div>
 
-    <script type="module">
-        import { createAccount } from './services/createAccount.js';
-        import { getConnectedUser } from './services/profile.js';
+<script type="module">
+    import {
+        createAccount
+    } from './services/createAccount.js';
+    import {
+        getConnectedUser
+    } from './services/profile.js';
 
-        const connectedUser = await getConnectedUser().catch(() => null);
+    const connectedUser = await getConnectedUser().catch(() => null);
 
-        if(connectedUser) {
-            window.location.href = "index.php?page=account";
+    if (connectedUser) {
+        window.location.href = "index.php?page=account";
+    }
+
+    document.getElementById('submit-creation').addEventListener('click', () => {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !email || !password) {
+            document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
+            return;
         }
 
-        document.getElementById('submit-creation').addEventListener('click', () => {
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            if (!username || !email || !password) {
-                document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
-                return;
-            }
-
-            createAccount(username, email, password)
+        createAccount(username, email, password)
             .then((data) => {
                 console.log("Success", data);
                 // Redirection vers la page d'accueil après la création du compte
@@ -59,8 +63,7 @@
                 console.error("Error:", error);
                 document.querySelector('.error').innerText = "Pseudo déjà prit. Veuillez en choisir un autre";
             });
-        });
-
-    </script>
+    });
+</script>
 
 <?php include './templates/footer.php'; ?>

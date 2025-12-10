@@ -1,4 +1,4 @@
-<?php 
+<?php
 $selectedMenu = null; // pour ne rien mettre en "active"
 include 'templates/header.php';
 ?>

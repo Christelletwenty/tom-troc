@@ -50,4 +50,3 @@ class MessageManager
         $markAsReadStmt->execute(['id' => $messageId]);
     }
 }
-?>
