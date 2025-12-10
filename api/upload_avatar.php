@@ -2,58 +2,60 @@
 require_once '../config/database.php';
 require_once '../managers/userManager.php';
 
-// 1. Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['currentUserId'])) {
     header('Location: ../login.php');
     exit;
 }
 
-// 2. Vérifier si un fichier a été envoyé
+$userId = $_SESSION['currentUserId'];
+
+//Vérif fichier
 if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
-    // Tu peux gérer un message d'erreur plus tard si tu veux
     header('Location: ../account.php');
     exit;
 }
 
 $file = $_FILES['avatar'];
 
-// 3. Vérifications basiques
+//Types autorisés
 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 if (!in_array($file['type'], $allowedTypes, true)) {
     header('Location: ../account.php');
     exit;
 }
 
-if ($file['size'] > 2 * 1024 * 1024) { // 2 Mo max par exemple
+//Taille max 2 Mo
+if ($file['size'] > 2 * 1024 * 1024) {
     header('Location: ../account.php');
     exit;
 }
 
-// 4. Déterminer le dossier de destination
-$uploadDir = '../uploads/avatars/';
+//Dossier de destination = assets/
+$uploadDir = '../assets/';
+
+// On s'assure qu'il existe
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
+    mkdir($uploadDir, 0775, true);
 }
 
-// 5. Générer un nom de fichier unique
-$extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-$userId = $_SESSION['currentUserId'];
+//Nom unique du fichier
+$extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION) ?: 'jpg');
 $filename = 'avatar_' . $userId . '_' . time() . '.' . $extension;
-$destinationPath = $uploadDir . $filename;
 
-// 6. Déplacer le fichier
+//Chemins
+$destinationPath = $uploadDir . $filename;      // Sur le disque
+$imagePathForDb  = 'assets/' . $filename;       // En BDD et visible via <img>
+
+//Déplacement du fichier
 if (!move_uploaded_file($file['tmp_name'], $destinationPath)) {
     header('Location: ../account.php');
     exit;
 }
 
-// 7. Chemin à stocker en BDD (chemin accessible depuis le navigateur)
-$imagePathForDb = 'uploads/avatars/' . $filename;
-
-// 8. Mettre à jour le user en BDD
+//Mise à jour du user
 $userManager = new UserManager($db);
 $userManager->updateUserImage($userId, $imagePathForDb);
 
-// 9. Redirection vers le compte
+//Retour à la page profil
 header('Location: ../account.php');
 exit;

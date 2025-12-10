@@ -31,6 +31,13 @@
 
     <script type="module">
         import { createAccount } from './services/createAccount.js';
+        import { getConnectedUser } from './services/profile.js';
+
+        const connectedUser = await getConnectedUser();
+
+        if(connectedUser) {
+            window.location.href = "account.php";
+        }
 
         document.getElementById('submit-creation').addEventListener('click', () => {
             const username = document.getElementById('username').value;

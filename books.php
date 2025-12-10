@@ -27,13 +27,17 @@
 
 <script type="module">
   import { getAllBooks } from "./services/books.js";
+  import { getConnectedUser } from "./services/profile.js";
 
   document.addEventListener("DOMContentLoaded", () => {
-    getAllBooks().then((books) => {
-
-      books.forEach((book) => {
+    Promise.all([getAllBooks(), getConnectedUser().catch(() => null)])
+      .then(([books, user]) => {
         const booksList = document.getElementById("books-list");
-        const bookCloneTemplate = booksList.querySelector(".book").cloneNode(true);
+        const template = booksList.querySelector(".book");
+
+        books.filter(book => book.user_id !== user?.id).forEach((book) => {
+
+        const bookCloneTemplate = template.cloneNode(true);
   
         bookCloneTemplate.querySelector("img").src = book.image;
         bookCloneTemplate.querySelector(".titre").textContent = book.titre;

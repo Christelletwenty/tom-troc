@@ -38,7 +38,7 @@
                 <li><a href="books.php" <?php echo isset($selectedMenu) && $selectedMenu === 'book' ? 'class="active"' : ''; ?>>Nos livres à l'échange</a></li>
             </ul>
             <ul>
-                <li><a href="messagerie.php" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
+                <li><a href="messages.php" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
                 <li><a href="account.php" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
 
                 <li id="logout-button"><a href="logout.php" class="logout">Déconnexion</a></li>
