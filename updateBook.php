@@ -5,7 +5,7 @@
     $bookId = $_GET['id'] ?? null;
     if (!$bookId) {
         // pas d'id → on retourne à la liste
-        header('Location: account.php');
+        header('Location: index.php?page=account');
         exit;
     }
 ?>
@@ -86,7 +86,7 @@
             .catch((error) => {
                 console.error("Erreur lors du chargement du livre", error);
                 alert("Impossible de charger ce livre.");
-                window.location.href = "account.php";
+                window.location.href = "index.php?page=account";
             });
 
         // Click sur "Valider"
@@ -104,7 +104,7 @@
             updateBook(bookId, titre, auteur, currentImage, description, dispo)
                 .then((data) => {
                     console.log("Livre édité avec succès", data);
-                    window.location.href = "account.php";
+                    window.location.href = "index.php?page=account";
                 })
                 .catch((error) => {
                     console.error("Erreur lors de la modification", error);

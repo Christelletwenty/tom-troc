@@ -43,7 +43,7 @@
         bookCloneTemplate.querySelector(".titre").textContent = book.titre;
         bookCloneTemplate.querySelector(".auteur").textContent = book.auteur;
         bookCloneTemplate.querySelector(".soldby").innerText = "Vendu par : " + book.user_name;
-        bookCloneTemplate.querySelector("a").href = `book.php?id=${book.id}`;
+        bookCloneTemplate.querySelector("a").href = `index.php?page=book&id=${book.id}`;
 
         booksList.appendChild(bookCloneTemplate);
       });

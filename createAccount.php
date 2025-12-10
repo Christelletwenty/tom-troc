@@ -23,7 +23,7 @@
 
             <button type="button" id="submit-creation">S'inscrire</button>
 
-            <span class="register">Déjà inscrit ? <a href="login.php">Connectez-vous</a></span>
+            <span class="register">Déjà inscrit ? <a href="index.php?page=login">Connectez-vous</a></span>
         </form>
         </div>
         <div class="mask-group"></div>
@@ -33,10 +33,10 @@
         import { createAccount } from './services/createAccount.js';
         import { getConnectedUser } from './services/profile.js';
 
-        const connectedUser = await getConnectedUser();
+        const connectedUser = await getConnectedUser().catch(() => null);
 
         if(connectedUser) {
-            window.location.href = "account.php";
+            window.location.href = "index.php?page=account";
         }
 
         document.getElementById('submit-creation').addEventListener('click', () => {

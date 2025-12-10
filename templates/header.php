@@ -34,15 +34,15 @@
                         <img src="assets/logo.png" alt="Logo Tom Troc" />
                     </a>
                 </li>
-                <li><a href="./" <?php echo isset($selectedMenu) && $selectedMenu === 'home' ? 'class="active"' : ''; ?>>Accueil</a></li>
-                <li><a href="books.php" <?php echo isset($selectedMenu) && $selectedMenu === 'book' ? 'class="active"' : ''; ?>>Nos livres à l'échange</a></li>
+                <li><a href="index.php?page=home" <?php echo isset($selectedMenu) && $selectedMenu === 'home' ? 'class="active"' : ''; ?>>Accueil</a></li>
+                <li><a href="index.php?page=books" <?php echo isset($selectedMenu) && $selectedMenu === 'book' ? 'class="active"' : ''; ?>>Nos livres à l'échange</a></li>
             </ul>
             <ul>
-                <li><a href="messages.php" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
-                <li><a href="account.php" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
+                <li><a href="index.php?page=messages" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
+                <li><a href="index.php?page=account" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
 
-                <li id="logout-button"><a href="logout.php" class="logout">Déconnexion</a></li>
-                <li id="login-button"><a href="login.php" <?php echo isset($selectedMenu) && $selectedMenu === 'login' ? 'class="active"' : ''; ?>>Connexion</a></li>
+                <li id="logout-button"><a href="index.php?page=logout" class="logout">Déconnexion</a></li>
+                <li id="login-button"><a href="index.php?page=login" <?php echo isset($selectedMenu) && $selectedMenu === 'login' ? 'class="active"' : ''; ?>>Connexion</a></li>
             </ul>
         </nav>
     </header>

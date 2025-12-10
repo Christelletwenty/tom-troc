@@ -18,7 +18,7 @@
 
             <button type="button" id="submit-login">Se connecter</button>
 
-            <span class="register">Pas de compte ? <a href="createAccount.php">Inscrivez-vous</a></span>
+            <span class="register">Pas de compte ? <a href="index.php?page=createAccount">Inscrivez-vous</a></span>
         </form>
         </div>
         <div class="mask-group"></div>

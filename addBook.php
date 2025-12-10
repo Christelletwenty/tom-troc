@@ -72,7 +72,7 @@
         createBook(titre, auteur, description, "1", imageFile)
             .then((data) => {
                 console.log("Livre créé avec succès", data);
-                window.location.href = "account.php";
+                window.location.href = "index.php?page=account";
             })
             .catch((error) => {
                 console.error("Erreur lors de la création", error);

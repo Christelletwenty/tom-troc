@@ -34,7 +34,7 @@
       document.querySelector("#send-msg").addEventListener("click", () => {
         createConversationWithUserId(book.user_id).then((conv) => {
           console.log(conv)
-          window.location.href = `messages.php?conversation_id=${conv.conversation_id}`;
+          window.location.href = `index.php?page=messages&conversation_id=${conv.conversation_id}`;
         }).catch((err) => alert(err));
       })
     });

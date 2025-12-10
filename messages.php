@@ -64,7 +64,7 @@
       const connectedUser = values[1];
 
       if(!connectedUser) {
-        window.location.href = "login.php";
+        window.location.href = "index.php?page=login";
       }
 
       const convList = document.getElementById('conversation-list');
@@ -202,7 +202,7 @@
         }
       });
     }).catch(err => {
-        window.location.href = "login.php";
+        window.location.href = "index.php?page=login";
     });
   });
 </script>

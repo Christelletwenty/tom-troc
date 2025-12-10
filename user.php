@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tbody       = document.getElementById("user-books-list");
 
   if (!userId) {
-    window.location.href = "books.php";
+    window.location.href = "index.php?page=books";
     return;
   }
 

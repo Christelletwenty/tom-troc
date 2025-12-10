@@ -155,13 +155,13 @@
                 }
               
               if (target.classList.contains("edit-book")) {
-                  window.location.href = `updateBook.php?id=${id}`;
+                  window.location.href = `index.php?page=updateBook&id=${id}`;
                 }
               });
           })
           .catch((error) => {
             // Si pas de user connecté → on retourne vers la page de login
-            window.location.href = "login.php";
+            window.location.href = "index.php?page=login";
           });
 
         //Gestion du bouton d'édition du profil
@@ -173,7 +173,7 @@
             updateUser(email, password, username)
               .then((data) => {
                 console.log("Profil édité avec succès", data);
-                window.location.href = "account.php";
+                window.location.href = "index.php?page=account";
               })
               .catch((error) => {
                 console.error("Erreur lors de la modification", error);
@@ -182,7 +182,7 @@
     });
 
     document.getElementById("add-book-btn").addEventListener("click", () => {
-      window.location.href = "addBook.php";
+      window.location.href = "index.php?page=addBook";
     });
 
 </script>
