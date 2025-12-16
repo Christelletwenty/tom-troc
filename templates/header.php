@@ -56,8 +56,8 @@
                 <li><a href="index.php?page=books" <?php echo isset($selectedMenu) && $selectedMenu === 'book' ? 'class="active"' : ''; ?>>Nos livres à l'échange</a></li>
             </ul>
             <ul>
-                <li><a href="index.php?page=messages" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie <span id="unread-badge" class="badge hidden">0</span></a></li>
-                <li><a href="index.php?page=account" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
+                <li><a href="index.php?page=messages" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>><img src="assets/icon_messagerie.png">Messagerie <span id="unread-badge" class="badge hidden">0</span></a></li>
+                <li><a href="index.php?page=account" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>><img src="assets/icon_mon_compte.png">Mon compte</a></li>
 
                 <li id="logout-button"><a href="index.php?page=logout" class="logout">Déconnexion</a></li>
                 <li id="login-button"><a href="index.php?page=login" <?php echo isset($selectedMenu) && $selectedMenu === 'login' ? 'class="active"' : ''; ?>>Connexion</a></li>

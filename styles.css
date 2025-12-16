@@ -95,6 +95,11 @@ header nav ul li a {
   gap: 1px;
 }
 
+header nav ul li a img {
+  height: 12px;
+  margin: 2px;
+}
+
 header nav ul li a.active,
 header nav ul li a:hover {
   font-weight: bold;
