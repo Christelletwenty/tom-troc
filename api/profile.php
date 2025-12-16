@@ -3,6 +3,8 @@ require_once '../config/database.php';
 require_once '../managers/userManager.php';
 require_once '../managers/livreManager.php';
 
+//Récupèration des infos du user connecté
+//Si pas de user -> erreur 401 unauthorized
 if (!isset($_SESSION['currentUserId'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Utilisateur non authentifié']);

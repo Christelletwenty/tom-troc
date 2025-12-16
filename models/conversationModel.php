@@ -24,7 +24,8 @@ class Conversation implements JsonSerializable
     {
         return $this->created_at = $created_at;
     }
-
+    //Création d'un tableau associatif pour la conversion en JSON
+    //json_encode ne sait pas comment convertir un objet en JSON
     public function jsonSerialize(): array
     {
         return [

@@ -2,35 +2,38 @@
 require_once '../config/database.php';
 require_once '../managers/userManager.php';
 
+
+//Véroification que l'utilisateur est bien connecté
 if (!isset($_SESSION['currentUserId'])) {
+    //Redirection vers la page de login si pas connecté
     header('Location: ../login.php');
     exit;
 }
-
+//Récupération de l'id de l'utilisateur connecté
 $userId = $_SESSION['currentUserId'];
 
-//Vérif fichier
+//Vérif que fichier avatar existe + pas d'erreur d'upload
 if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
     header('Location: ../account.php');
     exit;
 }
-
+//Récupération du fichier uploadé
 $file = $_FILES['avatar'];
 
-//Types autorisés
+//Types autorisés d'uplaod et empêche les autres
 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 if (!in_array($file['type'], $allowedTypes, true)) {
     header('Location: ../account.php');
     exit;
 }
 
-//Taille max 2 Mo
+//Taille limite + stockage 
 if ($file['size'] > 2 * 1024 * 1024) {
     header('Location: ../account.php');
     exit;
 }
 
-//Dossier de destination = assets/
+//Dossier de destination = assets/ ou sont stocké les images uploadées
 $uploadDir = '../assets/';
 
 // On s'assure qu'il existe

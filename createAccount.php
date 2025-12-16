@@ -35,8 +35,9 @@ $selectedMenu = 'login';
         getConnectedUser
     } from './services/profile.js';
 
+    //Vérif immédiate de si le user est connecté
     const connectedUser = await getConnectedUser().catch(() => null);
-
+    //Si oui redirection ves sa page account
     if (connectedUser) {
         window.location.href = "index.php?page=account";
     }
@@ -45,7 +46,7 @@ $selectedMenu = 'login';
         const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-
+        //Vérification que tous les champs sont bien remplis
         if (!username || !email || !password) {
             document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
             return;

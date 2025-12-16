@@ -37,6 +37,7 @@ $selectedMenu = 'books';
 
   document.addEventListener("DOMContentLoaded", () => {
     getBookById(new URLSearchParams(window.location.search).get('id')).then((book) => {
+      //Remplissage des informastions du livre
       document.querySelector(".book-img").style.backgroundImage = `url(${book.image})`;
       document.querySelector(".titre").innerText = book.titre;
       document.querySelector(".auteur").innerText = "par" + " " + book.auteur;
@@ -47,8 +48,9 @@ $selectedMenu = 'books';
       });
 
       document.querySelector("#send-msg").addEventListener("click", () => {
-
+        //Créer ou récupère une conversation avec le propio du livre
         createConversationWithUserId(book.user_id).then((conv) => {
+          //Redirection vers la messagerieavec l'id de la conversation
           console.log(conv)
           window.location.href = `index.php?page=messages&conversation_id=${conv.conversation_id}`;
         }).catch((err) => alert(err));

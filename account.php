@@ -55,7 +55,6 @@ $selectedMenu = 'home';
             </thead>
 
             <tbody id="user-books-list">
-                <!-- Les lignes seront générées en JS -->
             </tbody>
 
         </table>
@@ -85,7 +84,7 @@ $selectedMenu = 'home';
                 document.querySelector("#password").value = "";
                 document.querySelector("#username").value = user.user_name;
 
-                // Une fois qu'on a le currentUser, on récupère ses lvres
+                //Une fois qu'on a le currentUser, on récupère ses lvres
                 //Récupération des livres de l'utilisateur
                 const tbody = document.getElementById("user-books-list");
 

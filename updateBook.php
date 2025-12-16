@@ -60,19 +60,20 @@ if (!$bookId) {
     } from './services/profile.js';
 
     const bookId = <?= json_encode($bookId) ?>;
-
+    //Récupération des infos du formualire
     document.addEventListener("DOMContentLoaded", () => {
         const titreInput = document.getElementById('titre');
         const auteurInput = document.getElementById('auteur');
         const descriptionInput = document.getElementById('description');
         const dispoSelect = document.getElementById('dispo');
         const imageEl = document.getElementById('book-image');
-
+        //Variale pour stocker l'image actuelle du livre
         let currentImage = '';
 
         // Charger les infos du livre à partir de l'API
         getBookById(bookId)
             .then((book) => {
+                //Remplissage des champs de texte
                 titreInput.value = book.titre || '';
                 auteurInput.value = book.auteur || '';
                 descriptionInput.value = book.description || '';
@@ -94,16 +95,17 @@ if (!$bookId) {
 
         // Click sur "Valider"
         document.getElementById("submit-update").addEventListener('click', () => {
+            //Récup des valeurs saisies
             const titre = titreInput.value.trim();
             const auteur = auteurInput.value.trim();
             const description = descriptionInput.value.trim();
             const dispo = dispoSelect.value;
-
+            //Vérifi que les champs minimaux soient remplis
             if (!titre || !auteur) {
                 alert("Titre et auteur sont obligatoires.");
                 return;
             }
-
+            //Mise à jour du livre
             updateBook(bookId, titre, auteur, currentImage, description, dispo)
                 .then((data) => {
                     console.log("Livre édité avec succès", data);

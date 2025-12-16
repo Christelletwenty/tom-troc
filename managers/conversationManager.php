@@ -153,6 +153,7 @@ class ConversationManager
         return $convId !== false ? (int) $convId : null;
     }
 
+    //Récupère les infos des participants
     public function getParticipantInfos(int $conversationId): array
     {
         $getParticipantsInfoRequest = "

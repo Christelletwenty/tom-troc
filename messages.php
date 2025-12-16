@@ -33,6 +33,7 @@
     getConnectedUser
   } from "./services/profile.js";
 
+  //Set un avatr par défaut si le user en a pas
   const DEFAULT_AVATAR = "assets/default-avatar.png";
 
   function formatMessageTime(dateString) {
@@ -43,6 +44,7 @@
     });
   }
 
+  //Formate une date en format court jour/mois
   function formatMessageDate(dateString) {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
@@ -50,6 +52,7 @@
     return `${day}/${month}`;
   }
 
+  //Coupe un texte trop long pour les conv et ajoute ... 
   function truncateText(text, maxLength = 40) {
     if (!text) return "";
     if (text.length <= maxLength) return text;
@@ -58,6 +61,7 @@
 
 
   document.addEventListener("DOMContentLoaded", () => {
+    //Charge les conv et le user connecté
     Promise.all([
         getAllConversations(),
         getConnectedUser()
@@ -65,14 +69,14 @@
       .then((values) => {
         const conversations = values[0];
         const connectedUser = values[1];
-
+        //Si le user pas connecté, il est redirigé vers la page de login
         if (!connectedUser) {
           window.location.href = "index.php?page=login";
         }
 
+        //Liste des conversations (colonne de gauche)
         const convList = document.getElementById('conversation-list');
 
-        //Liste des conversations (colonne de gauche)
         conversations.forEach((conv) => {
           const elem = document.createElement("li");
           elem.setAttribute("id", "conv-" + conv.id);
@@ -95,7 +99,7 @@
           <span class="conv-time">${timeLabel}</span>
         `;
 
-          //On récupère les participants pour afficher le bon nom + avatar
+          //On récupère l'autre participant pour afficher le bon nom + avatar
           getAllParticipantsByConversationId(conv.id).then((participants) => {
             // participants est un tableau d'objets { id, username, image }
             const other = participants.find((p) => p.id !== connectedUser.id);

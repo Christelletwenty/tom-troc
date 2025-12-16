@@ -58,15 +58,17 @@ $selectedMenu = 'home';
 
   document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
+    //Récupération de l'id de l'utilisateur
     const userId = params.get("user_id");
 
-    // Références DOM avec les NOUVELLES CLASSES
+    // Références DOM avec les nouvelles classes
     const avatarImg = document.querySelector(".user-profile-avatar");
     const usernameEl = document.querySelector(".user-profile-username");
     const createdEl = document.querySelector(".user-profile-created");
     const booksCount = document.querySelector(".user-profile-books-count");
     const tbody = document.getElementById("user-books-list");
 
+    //On redirige vers la page des livres si y a pas d'utilisateur id
     if (!userId) {
       window.location.href = "index.php?page=books";
       return;
@@ -75,9 +77,10 @@ $selectedMenu = 'home';
     // Profil
     getUserById(userId)
       .then((user) => {
+        //avatar + nom de l'utilisateur
         avatarImg.src = user.image || "assets/default-avatar.png";
         usernameEl.textContent = user.username || "";
-
+        //Date d'inscription de l'utilisateur
         if (user.created_at) {
           const date = new Date(user.created_at);
           createdEl.textContent = "Membre depuis " + date.toLocaleDateString("fr-FR", {
@@ -90,10 +93,12 @@ $selectedMenu = 'home';
     // Livres
     getUserBooks(userId)
       .then((books) => {
+        //Affichage du nombre total de livres
         booksCount.textContent = `${books.length} livres`;
         tbody.innerHTML = "";
 
         books.forEach((book, i) => {
+          //Alternance de style pour les lignes
           const rowClass = i % 2 === 0 ? "user-book-row even" : "user-book-row odd";
 
           const tr = document.createElement("tr");

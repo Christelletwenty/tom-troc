@@ -97,11 +97,11 @@ $selectedMenu = 'home';
 
     document.addEventListener("DOMContentLoaded", () => {
         getAllBooks().then((books) => {
-
+            //Affichage des 4 premiers books
             books.slice(0, 4).forEach((book) => {
                 const booksList = document.getElementById("books-list");
                 const bookCloneTemplate = booksList.querySelector(".book").cloneNode(true);
-
+                //Remplissages des données du livre
                 bookCloneTemplate.querySelector("img").src = book.image;
                 bookCloneTemplate.querySelector(".titre").textContent = book.titre;
                 bookCloneTemplate.querySelector(".auteur").textContent = book.auteur;

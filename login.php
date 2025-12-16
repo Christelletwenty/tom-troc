@@ -32,7 +32,7 @@ $selectedMenu = 'login';
     document.getElementById('submit-login').addEventListener('click', () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-
+        //Vérif que tous les champs sont remplis
         if (!email || !password) {
             document.querySelector('.error').innerText = "Veuillez remplir tous les champs.";
             return;

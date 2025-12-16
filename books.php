@@ -35,15 +35,16 @@ $selectedMenu = 'books';
   } from "./services/profile.js";
 
   document.addEventListener("DOMContentLoaded", () => {
+    //Chargement des données des livres, user 
     Promise.all([getAllBooks(), getConnectedUser().catch(() => null)])
       .then(([books, user]) => {
         const booksList = document.getElementById("books-list");
         const template = booksList.querySelector(".book");
-
+        //On exclu les livres appartenant à l'utilisateur connecté
         books.filter(book => book.user_id !== user?.id).forEach((book) => {
 
           const bookCloneTemplate = template.cloneNode(true);
-
+          //Remplisage des données du livre
           bookCloneTemplate.querySelector("img").src = book.image;
           bookCloneTemplate.querySelector(".titre").textContent = book.titre;
           bookCloneTemplate.querySelector(".auteur").textContent = book.auteur;
@@ -53,10 +54,12 @@ $selectedMenu = 'books';
           booksList.appendChild(bookCloneTemplate);
         });
       });
-
+    //Filtre la liste des livre en fonction de la recherche de l'utilisateur
     document.getElementById("search-book").addEventListener("input", (e) => {
+      //Recherche en minuscules
       const searchText = e.target.value.toLowerCase();
 
+      //Ignore le prmeier child du template car c'est le modèle
       document.querySelectorAll("#books-list .book:not(:first-child)").forEach((li) => {
         const title = li.querySelector(".titre")?.textContent.toLowerCase() || "";
 

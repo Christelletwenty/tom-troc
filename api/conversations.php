@@ -153,8 +153,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // POST /api/conversations.php avec conversation_id=X & content=...
     if ($conversationId > 0 && $content !== '') {
 
-        // TODO (optionnel) : vérifier que $currentUserId est bien participant de cette conversation
-
         $message = new Message();
         $message->setSenderId($currentUserId);
         $message->setConversationId($conversationId);
