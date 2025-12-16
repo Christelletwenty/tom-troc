@@ -89,6 +89,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $currentUserId = requireAuth();
 
+    // on check si on est dans le cas ou on veut juste marquer les messages comme lus
+    if (isset($_POST['read_conversation_id'])) {
+
+        if (!isset($_SESSION['currentUserId'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            return;
+        }
+
+        $currentUserId = (int) $_SESSION['currentUserId'];
+        $conversationId = (int) $_POST['read_conversation_id'];
+
+        $messageManager->readMessages($currentUserId, $conversationId);
+        echo json_encode(['success' => true]);
+        return;
+    }
+
     // On récupère les données POST de façon safe
     $userId         = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
     $conversationId = isset($_POST['conversation_id']) ? (int) $_POST['conversation_id'] : 0;

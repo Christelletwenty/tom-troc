@@ -11,6 +11,10 @@
             getConnectedUser
         } from './services/profile.js';
 
+        import {
+            getNotificationsCount
+        } from './services/conversations.js';
+
         document.addEventListener("DOMContentLoaded", () => {
             //Récupération de l'utilisateur connecté
             getConnectedUser()
@@ -20,11 +24,21 @@
                         document.getElementById("logout-button").style.display = 'flex';
                     } else {
                         document.getElementById("login-button").style.display = 'flex';
+                        document.getElementById("unread-badge").style.display = 'none';
                     }
                 })
                 .catch(() => {
                     document.getElementById("login-button").style.display = 'flex';
+                    document.getElementById("unread-badge").style.display = 'none';
                 });
+
+            getNotificationsCount().then((data) => {
+                const badge = document.getElementById("unread-badge");
+                if (data.unread > 0) {
+                    badge.textContent = data.unread;
+                    badge.classList.remove("hidden");
+                }
+            });
         });
     </script>
 </head>
@@ -42,7 +56,7 @@
                 <li><a href="index.php?page=books" <?php echo isset($selectedMenu) && $selectedMenu === 'book' ? 'class="active"' : ''; ?>>Nos livres à l'échange</a></li>
             </ul>
             <ul>
-                <li><a href="index.php?page=messages" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie</a></li>
+                <li><a href="index.php?page=messages" <?php echo isset($selectedMenu) && $selectedMenu === 'message' ? 'class="active"' : ''; ?>>Messagerie <span id="unread-badge" class="badge hidden">0</span></a></li>
                 <li><a href="index.php?page=account" <?php echo isset($selectedMenu) && $selectedMenu === 'account' ? 'class="active"' : ''; ?>>Mon compte</a></li>
 
                 <li id="logout-button"><a href="index.php?page=logout" class="logout">Déconnexion</a></li>

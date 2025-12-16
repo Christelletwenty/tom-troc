@@ -54,3 +54,20 @@ export const createMessageForConversation = (conversationId, message) => {
     },
   }).then((response) => response.json());
 };
+
+export const getNotificationsCount = () => {
+  return fetch("api/message.php?unread_count=true").then((res) => res.json());
+};
+
+export const markConversationAsRead = (id) => {
+  const body = new URLSearchParams();
+  body.append("read_conversation_id", id);
+
+  return fetch("api/conversations.php", {
+    method: "POST",
+    body,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  }).then((response) => response.json());
+};

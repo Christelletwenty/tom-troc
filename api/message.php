@@ -4,8 +4,7 @@ require_once '../managers/messageManager.php';
 
 $messageManager = new MessageManager($db);
 
-//Récupération la conversation avec un user
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['unread_count'])) {
 
     if (!isset($_SESSION['currentUserId'])) {
         http_response_code(401);
@@ -13,29 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
         return;
     }
 
-    $currentUserId = $_SESSION['currentUserId'];
-    $otherUserId   = (int) $_GET['user_id'];
+    $currentUserId = (int) $_SESSION['currentUserId'];
 
-    $messages = $messageManager->getConversation($currentUserId, $otherUserId);
+    $count = $messageManager->countUnreadMessages($currentUserId);
 
-    echo json_encode($messages);
+    echo json_encode(['unread' => $count]);
     return;
-    //Récupération de tous MES messages
-} else if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['mine'])) {
-
-    if (!isset($_SESSION['currentUserId'])) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Non connecté']);
-        return;
-    }
-
-    $currentUserId = $_SESSION['currentUserId'];
-
-    $messages = $messageManager->getMessagesByUserId($currentUserId);
-
-    echo json_encode($messages);
-    return;
-    //Envoyer un message
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!isset($_SESSION['currentUserId'])) {
@@ -45,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
     }
 
     $senderId   = $_SESSION['currentUserId'];
-    $receiverId = (int) $_POST['receiver_id'];
-    $bookId     = isset($_POST['book_id']) ? (int) $_POST['book_id'] : null;
     $content    = trim($_POST['content']);
 
     if ($content === '') {
@@ -57,8 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['user_id'])) {
 
     $message = new Message();
     $message->setSenderId($senderId);
-    $message->setReceiverId($receiverId);
-    $message->setBookId($bookId);
     $message->setContent($content);
 
     $messageManager->createMessage($message);

@@ -49,4 +49,29 @@ class MessageManager
         $markAsReadStmt = $this->db->prepare($markAsReadRequest);
         $markAsReadStmt->execute(['id' => $messageId]);
     }
+
+    //Récupérer les messages non lu
+    public function countUnreadMessages(int $userId): int
+    {
+        $countUnreadMsgRequest = " SELECT COUNT(m.id) FROM message m JOIN conversation_user cu ON cu.conversation_id = m.conversation_id WHERE cu.user_id = :userId AND m.user_id != :userId AND m.read_at IS NULL ";
+
+        $countUnreadMsgStmt = $this->db->prepare($countUnreadMsgRequest);
+        $countUnreadMsgStmt->execute(['userId' => $userId]);
+
+        return (int) $countUnreadMsgStmt->fetchColumn();
+    }
+
+    // Marquer les messages comme lu
+    public function readMessages($currentUserId, $conversationId)
+    {
+        $readMessagesRequest = "UPDATE message
+                SET read_at = NOW()
+                WHERE conversation_id = :conversation_id AND user_id != :user_id";
+
+        $readMessagesStmt = $this->db->prepare($readMessagesRequest);
+        $readMessagesStmt->execute([
+            'conversation_id' => $conversationId,
+            'user_id'         => $currentUserId
+        ]);
+    }
 }

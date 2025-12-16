@@ -26,7 +26,8 @@
     getAllConversations,
     getAllMessagesForConversation,
     createMessageForConversation,
-    getAllParticipantsByConversationId
+    getAllParticipantsByConversationId,
+    markConversationAsRead
   } from "./services/conversations.js";
   import {
     getConnectedUser
@@ -116,6 +117,8 @@
             const url = new URL(window.location.href);
             url.searchParams.set("conversation_id", conv.id);
             window.location.href = url.toString();
+
+            markConversationAsRead(conv.id).then();
           });
 
           convList.appendChild(elem);
