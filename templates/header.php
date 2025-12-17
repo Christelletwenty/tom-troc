@@ -49,7 +49,7 @@
             <ul>
                 <li>
                     <a href="./">
-                        <img src="assets/logo.png" alt="Logo Tom Troc" />
+                        <img src="assets/logo.png" id="logo" alt="Logo Tom Troc" />
                     </a>
                 </li>
                 <li><a href="index.php?page=home" <?php echo isset($selectedMenu) && $selectedMenu === 'home' ? 'class="active"' : ''; ?>>Accueil</a></li>

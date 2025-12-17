@@ -95,7 +95,7 @@ header nav ul li a {
   gap: 1px;
 }
 
-header nav ul li a img {
+header nav ul li a img:not(#logo) {
   height: 12px;
   margin: 2px;
 }
@@ -204,6 +204,10 @@ aside img {
   display: flex;
   justify-content: center;
   gap: 32px;
+}
+
+.container-bandeau img {
+  width: 100%;
 }
 
 .info-card {
