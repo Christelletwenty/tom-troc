@@ -3,7 +3,7 @@ export const login = (email, password) => {
   body.append("email", email);
   body.append("password", password);
 
-  return fetch("api/login.php", {
+  return fetch("api/index.php?page=login", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -18,7 +18,7 @@ export const login = (email, password) => {
 };
 
 export const getConnectedUser = () => {
-  return fetch("api/login.php", {
+  return fetch("api/index.php?page=login", {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {

@@ -4,7 +4,7 @@ export const createAccount = (username, email, password) => {
   body.append("email", email);
   body.append("password", password);
 
-  return fetch("api/user.php", {
+  return fetch("api/index.php?page=user", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

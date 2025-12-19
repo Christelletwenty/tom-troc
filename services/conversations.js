@@ -1,5 +1,5 @@
 export const getAllConversations = () => {
-  return fetch("api/conversations.php", {
+  return fetch("api/index.php?page=conversations", {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -8,7 +8,7 @@ export const getAllConversations = () => {
 };
 
 export const getAllMessagesForConversation = (id) => {
-  return fetch("api/conversations.php?conversation_id=" + id, {
+  return fetch("api/index.php?page=conversations&conversation_id=" + id, {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -18,7 +18,9 @@ export const getAllMessagesForConversation = (id) => {
 
 export const getAllParticipantsByConversationId = (id) => {
   return fetch(
-    "api/conversations.php?conversation_id=" + id + "&participants=true",
+    "api/index.php?page=conversations&conversation_id=" +
+      id +
+      "&participants=true",
     {
       method: "GET",
       headers: {
@@ -32,7 +34,7 @@ export const createConversationWithUserId = (id) => {
   const body = new URLSearchParams();
   body.append("user_id", id);
 
-  return fetch("api/conversations.php", {
+  return fetch("api/index.php?page=conversations", {
     method: "POST",
     body,
     headers: {
@@ -46,7 +48,7 @@ export const createMessageForConversation = (conversationId, message) => {
   body.append("conversation_id", conversationId);
   body.append("content", message);
 
-  return fetch("api/conversations.php", {
+  return fetch("api/index.php?page=conversations", {
     method: "POST",
     body,
     headers: {
@@ -56,14 +58,16 @@ export const createMessageForConversation = (conversationId, message) => {
 };
 
 export const getNotificationsCount = () => {
-  return fetch("api/message.php?unread_count=true").then((res) => res.json());
+  return fetch("api/index.php?page=messages&unread_count=true").then((res) =>
+    res.json()
+  );
 };
 
 export const markConversationAsRead = (id) => {
   const body = new URLSearchParams();
   body.append("read_conversation_id", id);
 
-  return fetch("api/conversations.php", {
+  return fetch("api/index.php?page=conversations", {
     method: "POST",
     body,
     headers: {

@@ -10,7 +10,7 @@ $selectedMenu = 'home';
     <div class="infos-perso">
 
         <div class="profile">
-            <form class="avatar-form" action="api/upload_avatar.php" method="post" enctype="multipart/form-data">
+            <form class="avatar-form" action="api/index.php?page=upload_avatar" method="post" enctype="multipart/form-data">
                 <label class="avatar-wrapper">
                     <img src="assets/default-avatar.png" alt="Avatar" class="avatar-img">
                     <span class="avatar-edit">modifier</span>

@@ -1,5 +1,5 @@
 export const getAllBooks = () => {
-  return fetch("api/books.php", {
+  return fetch("api/index.php?page=books", {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -8,7 +8,7 @@ export const getAllBooks = () => {
 };
 
 export const getBookById = (id) => {
-  return fetch("api/books.php?id=" + id, {
+  return fetch("api/index.php?page=books&id=" + id, {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -17,7 +17,7 @@ export const getBookById = (id) => {
 };
 
 export const getBookUserById = (id) => {
-  return fetch("api/books.php?user_id=" + id, {
+  return fetch("api/index.php?page=books&user_id=" + id, {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

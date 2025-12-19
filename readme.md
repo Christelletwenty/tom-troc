@@ -2,6 +2,17 @@
 
 ## Prérequis
 
+Créez un fichier config/constants.php sous le format :
+
+```php
+<?php
+
+$databse_uri = '';
+$database_name = '';
+$database_user = '';
+$database_password = '';
+```
+
 Pour faire fonctionner le projet en local :
 
 - PHP 8.x

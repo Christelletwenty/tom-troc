@@ -1,5 +1,5 @@
 export const getConnectedUser = () => {
-  return fetch("api/profile.php", {
+  return fetch("api/index.php?page=profile", {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
@@ -18,7 +18,7 @@ export const updateUser = (email, password, username) => {
     body.append("password", password);
   }
 
-  return fetch("api/user.php", {
+  return fetch("api/index.php?page=user", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
@@ -40,7 +40,7 @@ export const updateBook = (id, titre, auteur, image, description, dispo) => {
   body.append("description", description);
   body.append("dispo", dispo);
 
-  return fetch("api/books.php", {
+  return fetch("api/index.php?page=books", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
@@ -57,7 +57,7 @@ export const deleteBook = (id) => {
   body.append("action", "delete");
   body.append("id", id);
 
-  return fetch("api/books.php", {
+  return fetch("api/index.php?page=books", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
@@ -71,8 +71,8 @@ export const deleteBook = (id) => {
 
 export const getUserBooks = (userId = null) => {
   const url = userId
-    ? `api/books.php?user_id=${encodeURIComponent(userId)}`
-    : "api/books.php";
+    ? `api/index.php?page=books&user_id=${encodeURIComponent(userId)}`
+    : "api/index.php?page=books";
 
   return fetch(url, {
     method: "GET",
@@ -101,7 +101,7 @@ export const createBook = (
     formData.append("image", imageFile);
   }
 
-  return fetch("api/books.php", {
+  return fetch("api/index.php?page=books", {
     method: "POST",
     body: formData,
   }).then((response) => {
@@ -113,7 +113,7 @@ export const createBook = (
 };
 
 export const getBookById = (id) => {
-  return fetch(`api/books.php?id=${encodeURIComponent(id)}`, {
+  return fetch(`api/index.php?page=books&id=${encodeURIComponent(id)}`, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
@@ -124,7 +124,7 @@ export const getBookById = (id) => {
 };
 
 export const getUserById = (id) => {
-  return fetch(`api/user.php?id=${encodeURIComponent(id)}`, {
+  return fetch(`api/index.php?page=user&id=${encodeURIComponent(id)}`, {
     method: "GET",
   }).then((response) => {
     if (!response.ok) {
