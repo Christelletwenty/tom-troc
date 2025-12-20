@@ -1,6 +1,6 @@
 <?php
 
-class Message implements JsonSerializable
+class MessageModel implements JsonSerializable
 {
 
     private $id;

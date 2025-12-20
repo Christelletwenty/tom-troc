@@ -100,7 +100,7 @@ class ConversationController
 
     public function createMessage($currentUserId, $conversationId, $content)
     {
-        $message = new Message();
+        $message = new MessageModel();
         $message->setSenderId($currentUserId);
         $message->setConversationId($conversationId);
         $message->setContent($content);

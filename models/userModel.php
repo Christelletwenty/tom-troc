@@ -1,6 +1,6 @@
 <?php
 
-class User implements JsonSerializable
+class UserModel implements JsonSerializable
 {
 
     private $id;

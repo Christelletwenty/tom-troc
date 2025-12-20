@@ -1,6 +1,6 @@
 <?php
 
-class Conversation implements JsonSerializable
+class ConversationModel implements JsonSerializable
 {
     private $id;
     private $created_at;

@@ -1,5 +1,5 @@
 <?php
-require_once '../models/conversationModel.php';
+require_once '../models/ConversationModel.php';
 
 class ConversationManager
 {
@@ -45,7 +45,7 @@ class ConversationManager
                 ORDER BY c.created_at DESC";
 
         $getConvByUserIdStmt = $this->db->prepare($getConvByUserIdRequest);
-        $getConvByUserIdStmt->setFetchMode(PDO::FETCH_CLASS, 'Conversation');
+        $getConvByUserIdStmt->setFetchMode(PDO::FETCH_CLASS, 'ConversationModel');
         $getConvByUserIdStmt->execute(['user_id' => $userId]);
 
         return $getConvByUserIdStmt->fetchAll();

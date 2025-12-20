@@ -1,5 +1,5 @@
 <?php
-require_once '../models/messageModel.php';
+require_once '../models/MessageModel.php';
 
 class MessageManager
 {
@@ -11,7 +11,7 @@ class MessageManager
     }
 
     //Envoie un message dans une conversation
-    public function createMessage(Message $message): void
+    public function createMessage(MessageModel $message): void
     {
         $createMsgRequest = "INSERT INTO message (conversation_id, user_id, content)
                 VALUES (:conversation_id, :user_id, :content)";
@@ -33,7 +33,7 @@ class MessageManager
                 ORDER BY created_at ASC";
 
         $getMessagesByConvIdStmt = $this->db->prepare($getMessagesByConvIdRequest);
-        $getMessagesByConvIdStmt->setFetchMode(PDO::FETCH_CLASS, 'Message');
+        $getMessagesByConvIdStmt->setFetchMode(PDO::FETCH_CLASS, 'MessageModel');
         $getMessagesByConvIdStmt->execute(['conversation_id' => $conversationId]);
 
         return $getMessagesByConvIdStmt->fetchAll();

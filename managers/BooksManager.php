@@ -1,7 +1,7 @@
 <?php
-require_once '../models/livreModel.php';
+require_once '../models/BookModel.php';
 
-class LivreManager
+class BooksManager
 {
     private $db;
     public function __construct($db)
@@ -31,7 +31,7 @@ class LivreManager
         $getBooksRequest = 'SELECT * FROM livre WHERE user_id = :user_id';
 
         $getBooksStmt = $this->db->prepare($getBooksRequest);
-        $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
+        $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'BookModel');
         $getBooksStmt->execute([
             'user_id' => $userId
         ]);
@@ -59,7 +59,7 @@ class LivreManager
         ';
 
         $getBooksStmt = $this->db->prepare($getBooksRequest);
-        $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
+        $getBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'BookModel');
         $getBooksStmt->execute([
             'id' => $id
         ]);
@@ -87,7 +87,7 @@ class LivreManager
         ';
 
         $findAllBooksStmt = $this->db->prepare($findAllBooksRequest);
-        $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'Livre');
+        $findAllBooksStmt->setFetchMode(PDO::FETCH_CLASS, 'BookModel');
         $findAllBooksStmt->execute();
 
         return $findAllBooksStmt->fetchAll();
@@ -95,7 +95,7 @@ class LivreManager
 
 
     //Créer un livre : passer le currentUserId en paramètre (souvent venant de $_SESSION['user_id']).
-    public function createBook(Livre $livre)
+    public function createBook(BookModel $livre)
     {
 
         $createBookRequest = 'INSERT INTO livre (titre, auteur, image, description, dispo, user_id) VALUES (:titre, :auteur, :image, :description, :dispo, :user_id)';
@@ -126,7 +126,7 @@ class LivreManager
     }
 
     //Mettre à jour un livre
-    public function updateBook(Livre $livre)
+    public function updateBook(BookModel $livre)
     {
 
         $updateBookRequest = 'UPDATE livre SET titre = :titre, auteur = :auteur, image = :image, description = :description, dispo = :dispo WHERE id = :id AND user_id = :user_id';

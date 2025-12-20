@@ -90,7 +90,7 @@ class UserController
             return json_encode(['erreur' => 'Nom dutilisateur déjà pris']);
         } else {
             // On crée le nouveau user
-            $user = new User();
+            $user = new UserModel();
             $user->setUsername($username);
             $user->setEmail($email);
             $user->setPassword($password);

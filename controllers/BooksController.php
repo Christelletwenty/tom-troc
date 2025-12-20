@@ -2,29 +2,29 @@
 
 class BooksController
 {
-    private $livreManager;
+    private $booksManager;
 
-    public function __construct(LivreManager $manager)
+    public function __construct(BooksManager $manager)
     {
-        $this->livreManager = $manager;
+        $this->booksManager = $manager;
     }
 
 
     public function getAllBooks()
     {
-        $books = $this->livreManager->findAllBooks();
+        $books = $this->booksManager->findAllBooks();
         return json_encode($books);
     }
 
     public function getBookById($id)
     {
-        $book = $this->livreManager->getBookById($id);
+        $book = $this->booksManager->getBookById($id);
         return json_encode($book);
     }
 
     public function getBooksByUserId($userId)
     {
-        $books = $this->livreManager->getBooksByUserId($userId);
+        $books = $this->booksManager->getBooksByUserId($userId);
         return json_encode($books);
     }
 
@@ -57,7 +57,7 @@ class BooksController
         }
 
         // Mise à jour du chemin de l'image en BDD
-        $this->livreManager->updateBookImage($bookId, $publicPath);
+        $this->booksManager->updateBookImage($bookId, $publicPath);
 
         // Retour sur la page d'édition du livre
         header('Location: ../updateBook.php?id=' . $bookId);
@@ -87,7 +87,7 @@ class BooksController
             }
         }
         //Création de l'objet Livre
-        $livre = new Livre();
+        $livre = new BookModel();
         $livre->setTitre($titre);
         $livre->setAuteur($auteur);
         $livre->setImage($imagePath);
@@ -95,13 +95,13 @@ class BooksController
         $livre->setDispo($dispo);
         $livre->setUserId($currentUserId);
 
-        $this->livreManager->createBook($livre);
+        $this->booksManager->createBook($livre);
         return json_encode(['succès' => 'Livre crée']);
     }
 
     public function updateBook($id, $titre, $auteur, $image, $description, $dispo, $currentUserId)
     {
-        $livre = new Livre();
+        $livre = new BookModel();
         $livre->setId($id);
         $livre->setTitre($titre);
         $livre->setAuteur($auteur);
@@ -110,14 +110,14 @@ class BooksController
         $livre->setDispo($dispo);
         $livre->setUserId($currentUserId);
 
-        $this->livreManager->updateBook($livre);
+        $this->booksManager->updateBook($livre);
 
         return json_encode(['succès' => 'Livre mis à jour']);
     }
 
     public function deleteBook($id)
     {
-        $this->livreManager->deleteBook($id);
+        $this->booksManager->deleteBook($id);
         return json_encode(['succès' => 'Livre supprimé']);
     }
 }

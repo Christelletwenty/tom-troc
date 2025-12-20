@@ -1,5 +1,5 @@
 <?php
-require_once '../models/userModel.php';
+require_once '../models/UserModel.php';
 
 class UserManager
 {
@@ -15,7 +15,7 @@ class UserManager
         $getEmailRequest = 'SELECT * FROM user WHERE email = :email';
 
         $getEmailStmt = $this->db->prepare($getEmailRequest);
-        $getEmailStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $getEmailStmt->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
         $getEmailStmt->execute([
             //strtolower me retourne une nouvelle variable mais en minuscule
             'email' => strtolower($email)
@@ -30,7 +30,7 @@ class UserManager
         $getUserRequest = 'SELECT * FROM user WHERE username = :name';
 
         $getUserlStmt = $this->db->prepare($getUserRequest);
-        $getUserlStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $getUserlStmt->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
         $getUserlStmt->execute([
             //strtolower me retourne une nouvelle variable mais en minuscule
             'name' => strtolower($name)
@@ -46,7 +46,7 @@ class UserManager
         $getUserRequest = 'SELECT * FROM user WHERE id = :id';
 
         $getUserStmt = $this->db->prepare($getUserRequest);
-        $getUserStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $getUserStmt->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
         $getUserStmt->execute([
             'id' => $id
         ]);
@@ -61,14 +61,14 @@ class UserManager
         $findAllRequest = 'SELECT * FROM user';
 
         $findAllStmt = $this->db->prepare($findAllRequest);
-        $findAllStmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $findAllStmt->setFetchMode(PDO::FETCH_CLASS, 'UserModel');
         $findAllStmt->execute();
 
         return $findAllStmt->fetchAll();
     }
 
     //Création d'un user
-    public function createUser(User $user)
+    public function createUser(UserModel $user)
     {
 
         $createUserRequest = 'INSERT INTO user (username, email, password) VALUES (:username, :email, :password)';
@@ -83,7 +83,7 @@ class UserManager
     }
 
     // Update d'un profil user
-    public function updateUser(User $user): void
+    public function updateUser(UserModel $user): void
     {
         // On prépare les paramètres communs
         $params = [

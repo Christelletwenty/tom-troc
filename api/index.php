@@ -1,16 +1,16 @@
 <?php
 require_once '../config/database.php';
-require_once '../managers/livreManager.php';
+require_once '../managers/BooksManager.php';
 require_once '../controllers/BooksController.php';
 
-require_once '../managers/conversationManager.php';
-require_once '../managers/messageManager.php';
+require_once '../managers/ConversationManager.php';
+require_once '../managers/MessageManager.php';
 require_once '../controllers/ConversationsController.php';
 
-require_once '../managers/userManager.php';
+require_once '../managers/UserManager.php';
 require_once '../controllers/UserController.php';
 
-$booksManager = new LivreManager($db);
+$booksManager = new BooksManager($db);
 $bookController = new BooksController($booksManager);
 
 $userManager = new UserManager($db);
