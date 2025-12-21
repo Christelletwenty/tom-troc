@@ -6,27 +6,27 @@ $page = $_GET['page'] ?? 'home';
 
 switch ($page) {
     case 'home':
-        require __DIR__ . '/home.php';
+        require __DIR__ . '/templates/home.php';
         break;
 
     case 'books':
-        require __DIR__ . '/books.php';
+        require __DIR__ . '/templates/books.php';
         break;
 
     case 'book':
-        require __DIR__ . '/book.php';
+        require __DIR__ . '/templates/book.php';
         break;
 
     case 'account':
-        require __DIR__ . '/account.php';
+        require __DIR__ . '/templates/account.php';
         break;
 
     case 'messages':
-        require __DIR__ . '/messages.php';
+        require __DIR__ . '/templates/messages.php';
         break;
 
     case 'login':
-        require __DIR__ . '/login.php';
+        require __DIR__ . '/templates/login.php';
         break;
 
     case 'logout':
@@ -35,19 +35,19 @@ switch ($page) {
 
     case 'register':
     case 'createAccount':
-        require __DIR__ . '/createAccount.php';
+        require __DIR__ . '/templates/createAccount.php';
         break;
 
     case 'addBook':
-        require __DIR__ . '/addBook.php';
+        require __DIR__ . '/templates/addBook.php';
         break;
 
     case 'updateBook':
-        require __DIR__ . '/updateBook.php';
+        require __DIR__ . '/templates/updateBook.php';
         break;
 
     case 'user':
-        require __DIR__ . '/user.php';
+        require __DIR__ . '/templates/user.php';
         break;
 
     default:

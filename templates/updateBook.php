@@ -1,13 +1,5 @@
 <?php
 $selectedMenu = 'books';
-
-// Récupérer l'id du livre depuis l'URL
-$bookId = $_GET['id'] ?? null;
-if (!$bookId) {
-    // pas d'id → on retourne à la liste
-    header('Location: index.php?page=account');
-    exit;
-}
 ?>
 
 <?php include './templates/header.php'; ?>

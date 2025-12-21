@@ -117,4 +117,84 @@ class ConversationController
 
         return json_encode(['unread' => $count]);
     }
+
+    public function messagesRoute()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if (!isset($_SESSION['currentUserId'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            return;
+        }
+        $currentUserId = (int) $_SESSION['currentUserId'];
+
+        if ($method === 'GET') {
+            if (isset($_GET['unread_count'])) {
+                echo $this->getUnreadForUserId($currentUserId);
+                return;
+            }
+            return;
+        }
+    }
+
+    public function conversationsRoute()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if (!isset($_SESSION['currentUserId'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            return;
+        }
+        $currentUserId = (int) $_SESSION['currentUserId'];
+
+        if ($method === 'GET') {
+            if (isset($_GET['conversation_id']) && isset($_GET['participants'])) {
+
+                $conversationId = (int) $_GET['conversation_id'];
+                echo $this->getParticipantsForConversationId($conversationId, $currentUserId);
+                return;
+            }
+
+            if (isset($_GET['conversation_id'])) {
+                $conversationId = (int) $_GET['conversation_id'];
+
+                echo $this->getConversationById($conversationId, $currentUserId);
+                return;
+            }
+
+            // GET par défaut sans params, on renvoie la liste des conv du user connecté avec le dernier message etc...
+            echo $this->getConversationsForUserId($currentUserId);
+            return;
+        } else if ($method === 'POST') {
+            if (isset($_POST['read_conversation_id'])) {
+                $conversationId = (int) $_POST['read_conversation_id'];
+
+                echo $this->markConversationAsRead($conversationId, $currentUserId);
+                return;
+            }
+
+            $userId         = isset($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
+            $conversationId = isset($_POST['conversation_id']) ? (int) $_POST['conversation_id'] : 0;
+            $content        = isset($_POST['content']) ? trim($_POST['content']) : '';
+
+            //Création d'une nouvelle conversation
+            //POST /api/conversations.php avec user_id=X
+            if ($userId > 0 && $conversationId === 0 && $content === '') {
+                echo $this->createConversation($userId, $currentUserId);
+                return;
+            }
+
+            // Création d'un message dans une conversation
+            // POST /api/conversations.php avec conversation_id=X & content=...
+            if ($conversationId > 0 && $content !== '') {
+                echo $this->createMessage($currentUserId, $conversationId, $content);
+                return;
+            }
+
+            //Sinon : requête POST invalide
+            http_response_code(400);
+            echo json_encode(['error' => 'Paramètres POST invalides']);
+            return;
+        }
+    }
 }

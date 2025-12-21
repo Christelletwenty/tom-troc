@@ -120,4 +120,87 @@ class BooksController
         $this->booksManager->deleteBook($id);
         return json_encode(['succès' => 'Livre supprimé']);
     }
+
+    public function booksRoute(): void
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        // ===== GET =====
+        if ($method === 'GET') {
+
+            if (isset($_GET['user_id'])) {
+                echo $this->getBooksByUserId($_GET['user_id']);
+                return;
+            }
+
+            if (isset($_GET['id'])) {
+                echo $this->getBookById($_GET['id']);
+                return;
+            }
+
+            echo $this->getAllBooks();
+            return;
+        }
+
+        // ===== POST =====
+        if ($method === 'POST') {
+
+            if (!isset($_SESSION['currentUserId'])) {
+                http_response_code(401);
+                echo json_encode(['error' => 'Non connecté']);
+                return;
+            }
+            $currentUserId = (int) $_SESSION['currentUserId'];
+
+            // Upload image (book existant)
+            if (isset($_FILES['image']) && isset($_POST['book_id'])) {
+                $bookId = (int) $_POST['book_id'];
+                $this->addImageForBookId($_FILES['image'], $bookId);
+                return;
+            }
+
+            // Update
+            if (isset($_POST['id'], $_POST['titre'], $_POST['auteur'], $_POST['image'], $_POST['description'], $_POST['dispo'])) {
+                echo $this->updateBook(
+                    $_POST['id'],
+                    $_POST['titre'],
+                    $_POST['auteur'],
+                    $_POST['image'],
+                    $_POST['description'],
+                    $_POST['dispo'],
+                    $currentUserId
+                );
+                return;
+            }
+
+            // Delete
+            if (isset($_POST['id']) && !isset($_POST['titre'])) {
+                echo $this->deleteBook($_POST['id']);
+                return;
+            }
+
+            // Add
+            if (isset($_POST['titre'], $_POST['auteur'], $_POST['description'])) {
+                $titre = $_POST['titre'];
+                $auteur = $_POST['auteur'];
+                $description = $_POST['description'];
+                $dispo = isset($_POST['dispo']) ? $_POST['dispo'] : 1;
+
+                $file = null;
+                if (!empty($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $file = $_FILES;
+                }
+
+                echo $this->addBook($titre, $auteur, $description, $dispo, $currentUserId, $file);
+                return;
+            }
+
+            http_response_code(400);
+            echo json_encode(['error' => 'Paramètres POST invalides']);
+            return;
+        }
+
+        http_response_code(405);
+        echo json_encode(['error' => 'Méthode non autorisée']);
+    }
 }

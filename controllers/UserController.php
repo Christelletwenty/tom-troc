@@ -151,14 +151,134 @@ class UserController
 
         //Déplacement du fichier
         if (!move_uploaded_file($file['tmp_name'], $destinationPath)) {
-            header('Location: ../account.php');
+            header('Location: ../index.php?page=account');
             exit;
         }
 
         $this->userManager->updateUserImage($userId, $imagePathForDb);
 
         //Retour à la page profil
-        header('Location: ../account.php');
+        header('Location: ../index.php?page=account');
         return;
+    }
+
+    public function loginRoute(): void
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+
+        // GET: récupérer l'utilisateur connecté (si tu le fais déjà)
+        if ($method === 'GET') {
+            echo $this->getConnectedUser();
+            return;
+        }
+
+        // POST: login avec email + password
+        if ($method === 'POST') {
+            if (!isset($_POST['email'], $_POST['password'])) {
+                http_response_code(400);
+                echo json_encode(['error' => 'Email et mot de passe requis']);
+                return;
+            }
+
+            echo $this->login($_POST['email'], $_POST['password']);
+            return;
+        }
+
+        http_response_code(405);
+        echo json_encode(['error' => 'Méthode non autorisée']);
+    }
+
+    public function uploadAvatarRoute(): void
+    {
+        if (!isset($_SESSION['currentUserId'])) {
+            header('Location: ../index.php?page=login');
+            exit;
+        }
+        $currentUserId = (int) $_SESSION['currentUserId'];
+
+        if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
+            header('Location: ../index.php?page=account');
+            exit;
+        }
+
+        $file = $_FILES['avatar'];
+
+        // Types autorisés (comme dans ton api/index.php actuel) :contentReference[oaicite:1]{index=1}
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        if (!in_array($file['type'], $allowedTypes, true)) {
+            header('Location: ../index.php?page=account');
+            exit;
+        }
+
+        // Taille max 2MB (comme ton code actuel) :contentReference[oaicite:2]{index=2}
+        if ($file['size'] > 2 * 1024 * 1024) {
+            header('Location: ../index.php?page=account');
+            exit;
+        }
+
+        $this->uploadAvatar($currentUserId, $file);
+    }
+
+    public function profileRoute()
+    {
+        if (!isset($_SESSION['currentUserId'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            return;
+        }
+        $currentUserId = (int) $_SESSION['currentUserId'];
+
+        echo $this->getUserProfileById($currentUserId);
+    }
+
+    public function userRoute()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if (!isset($_SESSION['currentUserId'])) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Non connecté']);
+            return;
+        }
+        $currentUserId = (int) $_SESSION['currentUserId'];
+
+        if ($method === 'POST') {
+            if (!isset($_SESSION['currentUserId'])) {
+                http_response_code(401);
+                echo json_encode(['error' => 'Non connecté']);
+                return;
+            }
+            $currentUserId = (int) $_SESSION['currentUserId'];
+
+            if (
+                isset($_POST['username'])
+                && isset($_POST['email'])
+                && isset($_POST['password'])
+            ) {
+
+                $username = $_POST['username'];
+                $email    = $_POST['email'];
+                $password = $_POST['password'];
+                echo $this->createUser($username, $email, $password);
+                return;
+            } else if (isset($_POST['username'])) {
+
+                $username = $_POST['username'];
+                $email    = $_POST['email'] ?? null;
+                $password = $_POST['password'] ?? null;
+
+                echo $this->updateUserProfile($currentUserId, $username, $email, $password);
+                return;
+            }
+        } else if ($method === 'GET') {
+            if (isset($_GET['id'])) {
+                $userId = (int) $_GET['id'];
+                echo $this->getUserById($userId);
+                return;
+            } else {
+                // Sinon : renvoyer tous les users
+                echo $this->getAllUsers();
+                return;
+            }
+        }
     }
 }
